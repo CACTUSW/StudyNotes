@@ -7,7 +7,7 @@
 3. pwd  显示当前所在目录路径
 4. ls(ll)  都是列出当前目录中的所有文件,只不过ll列出的内容更为详细
 5. touch  新建一个文件,如  touch index.js  会在当前目录下新建一个index.js文件
-6. rm  删除一个文件,rm  index.js  就回吧index.js文件删除
+6. rm  删除一个文件,rm  index.js  就会把index.js文件删除
 7. mkdir  新建一个目录,即新建一个文件夹
 8. rm -r  删除一个文件夹,rm -r src  删除src目录
    1. `rm -rf /  切勿在linux中尝试,删除电脑中全部文件`
@@ -63,7 +63,7 @@ Git本地有三个工作区域：工作目录(Working Directory)、暂存区(Rep
 + Workspace：工作区，平时存放项目代码的地方
 + index/Stage：暂存区，用于临时存放你的改动，事实上他只是一个文件，保存即将提交到文件列表信
 
-# When You Create  a New Repository
+# 当你创建一个新的仓库
 
 1. 使用`git init`来初始化一个本地仓库
 

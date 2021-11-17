@@ -134,7 +134,7 @@
           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.Volerde.dao.UserDao">
       <select id="getUserList" resultType="com.Volerde.pojo.User">
-          select * from mybaatis.user
+          select * from mybatis.user
       </select>
   </mapper>
   ```

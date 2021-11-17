@@ -42,7 +42,7 @@ public class HelloController {
 
 pom.xml
 
-+ spring-boot-dependencies:黑心依赖在父工程中
++ spring-boot-dependencies:依赖在父工程中
 + 在写或引入SpringBoot的依赖时，不需要指定版本
 
 

@@ -126,7 +126,9 @@
 
 ##### MySQL必知必会(文字版).pdf
 
-链接：https://pan.baidu.com/s/15hcVf3b4qHtoiLKmWg6GdA 提取码：eptx
+链接：https://pan.baidu.com/s/15hcVf3b4qHtoiLKmWg6eptx
+
+eGdA 提取码：eptx
 
 ##### MySQL性能调优与架构设计.pdf
 

@@ -239,7 +239,7 @@ Beans：
     <bean id="user" class="com.test.pojo.User" p:name="testname" p:age="19"/>
 <!--    c命名空间注入，通过构造器注入：Construct-args-->
     <bean id="user2" class="com.test.pojo.User" c:age="19" c:name="testname2"/>
-    
+    jso
 </beans>
 ```
 
