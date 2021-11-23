@@ -1,6 +1,6 @@
 
 
-# linux基本命令
+### linux基本命令
 
 1. cd  改变目录
 2. cd ..  回退到上一个目录,直接cd进入默认目录
@@ -19,7 +19,7 @@
 14. exit  退出
 15. \#  表示注释
 
-# Git配置
+### Git配置
 
 查看配置`git config -l`
 
@@ -52,7 +52,7 @@ git config --global user.email Volerde@outlook.com	#email
 
 只需要做一次这个设置,如果你传递了--global选项,因为git将总是会使用该信息处理你在系统中所做的的一切操作.如果你希望在一个特定的项目中使用不同的名称或email地址,你可以在该项目中运行该命令而不要--global选项.
 
-# Git基本理论
+### Git基本理论
 
 > 工作区域
 
@@ -63,7 +63,7 @@ Git本地有三个工作区域：工作目录(Working Directory)、暂存区(Rep
 + Workspace：工作区，平时存放项目代码的地方
 + index/Stage：暂存区，用于临时存放你的改动，事实上他只是一个文件，保存即将提交到文件列表信
 
-# 当你创建一个新的仓库
+### 当你创建一个新的仓库
 
 1. 使用`git init`来初始化一个本地仓库
 
@@ -89,9 +89,42 @@ Git本地有三个工作区域：工作目录(Working Directory)、暂存区(Rep
    cat ~/.ssh/id_rsa.pub
    ```
 
-5.    将ssh添加到远程仓库
+5. 将ssh添加到远程仓库
 
-# git本地分支和远程分支改名
+6. 添加远程仓库
+
+   ```bash
+   git remote add origin git@github.com:Volerde/xxx.git(你的仓库地址)
+   ```
+
+7. 拉取远程分支信息,首次拉取合并信息
+
+   ```bash
+   git pull
+   ```
+
+8. 提交到远程仓库
+
+   ```bash
+   git push -u origin master
+   ```
+
+
+### git others
+
+1. 查看本地提交记录
+
+   ```bash
+   git log
+   ```
+
+2. 查看最新一次{id}的提交详情
+
+   ```bash
+   git show {id}
+   ```
+
+### git本地分支和远程分支改名
 
 1. 将本地分支进行改名
 
@@ -113,9 +146,7 @@ Git本地有三个工作区域：工作目录(Working Directory)、暂存区(Rep
 
    
 
-# issues
-
-
+### issues
 
 **Git在push推送时，报错提示信息如下：**
 

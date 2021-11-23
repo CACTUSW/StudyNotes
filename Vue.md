@@ -940,6 +940,151 @@ app.mount("#app");
 + `computed`和`method`都能实现的功能,建议使用`computed`,因为有缓存,不用渲染页面就刷新
 + `computed`和`watch`都能实现的功能,建议使用`computed`,因为更加简洁
 
+# 绑定事件
+
+### 方法和参数
+
+```javascript
+const app = Vue.createApp({
+    data(){
+        return {
+            count:0
+        }
+    },
+    methods: {
+        addCountClick(num,event) {
+            this.count+=num
+            console.log(event.target)
+        },
+        alertBtnClick1(){
+            alert(1)
+        },
+        alertBtnClick2(){
+            alert(2)
+        }
+    },
+    template:`
+      <div>{{ count }}</div>
+      <button @click="addCountClick(2,$event)">Click</button>
+      <button @click="count++">Click</button><!--可以直接用表达式-->
+      <button @click="alertBtnClick1(),alertBtnClick2()"></button>
+    `
+})
+app.mount("#app")
+```
+
+@click="addCountClick(2,$event)"
+
++ 无参数时,写为addCountClick,不用加括号,且在methods中的方法加入参数event即可传入event
++ 有参数时,写为addCountClick(参数1,参数2...),需要传入event时需用"$",写为"\$event"
++ 要触发两个事件时,用","隔开,并**需要加上()**
+
+### 事件修饰符
+
+>  冒泡事件			.stop
+
+```vue
+template:`
+    <div @click="alertBtnClick">
+        <div>{{ count }}</div>
+        <button @click="addCountClick">Click</button>
+    </div>
+`
+```
+
+当点击button时,程序会向上冒泡,先触发addCountClick事件,然后触发alertBtnClick事件
+
+**解决方法:@click后面加上.stop阻止冒泡事件**
+
+```vue
+template:`
+    <div @click="alertBtnClick">
+        <div>{{ count }}</div>
+        <button @click.stop="addCountClick">Click</button>
+    </div>
+`
+```
+
+> .self
+
+```vue
+template:`
+    <div @click.self="alertBtnClick">
+        点击本元素才会触发.self,即alertBtnClick事件只会响应本元素的触发,不会响应子元素的触发
+        <div>{{ count }}</div>
+        <button @click.stop="addCountClick">Click</button>
+    </div>
+`
+```
+
+> .prevent
+
+```vue
+        template:`
+          <form action="https://www.volerde.space" @click.prevent="handleClick">
+            <button type="submit">submit</button>
+          </form>
+        `
+```
+
+阻止默认事件的发生
+
+> .capture
+
+```vue
+template:`
+    <div @click.capture="alertBtnClick">
+        <div>{{ count }}</div>
+        <button @click="addCountClick">Click</button>
+    </div>
+`
+```
+
+.capture和冒泡事件正好相反,冒泡事件是先执行字元素中的事件,再执行父元素的事件;而.capture则是先执行父元素的事件,再去执行子元素的事件
+
+> .once
+
+```vue
+template:`
+    <div @click="alertBtnClick">
+        <div>{{ count }}</div>
+        <button @click.once="addCountClick">Click</button>
+    </div>
+`
+```
+
+.once只会使事件在第一次执行时成功,此后则会阻止事件发生,即只能点击一次
+
+> .passive
+>
+> passive主要用在移动端的scroll事件，来提高浏览器响应速度，提升用户体验。因为passive=true等于提前告诉了浏览器，touchstart和touchmove不会阻止默认事件，手刚开始触摸，浏览器就可以立刻给与响应；否则，手触摸屏幕了，但要等待touchstart和touchmove的结果，多了这一步，响应时间就长了，用户体验也就差了。
+
+### 按键与鼠标修饰符
+
+> 按键修饰符
+
+```vue
+template:`
+    <div>
+        <input @keydown.enter="handleKeyDown">
+    </div>
+`
+// 按键修饰符    enter    tab    delete    esc    up    down    left    right
+```
+
+> 鼠标修饰符
+
+```vue
+template:`
+    <div>
+        <div @click.right="handleKeyDown">Click with right</div>
+    </div>
+`
+// 鼠标修饰符    left    right    middle 
+```
+
+
+
 # Axios异步通信
 
 Axios是一个开源的可以用在浏览器端和NodeJS的异步通信框架，它的主要作用就是实现Ajax异步通信
