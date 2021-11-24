@@ -86,9 +86,9 @@ Vue.js就是MVVM的实现者，它的核心就是实现了DOM监听与数据绑�
 
 # 基础语法
 
-#### 指令
+### 指令
 
-##### v-bind
+#### v-bind
 
 ```html
 <html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
@@ -120,7 +120,7 @@ v-bind等被称为指令，指令带有前缀 v-，以表示他们是Vue提供�
 
 在这里，该指令的意思为：“将这个元素节点的title特性和Vue实例的massage属性绑定”。
 
-##### v-if，v-else
+#### v-if，v-else
 
 ```html
 <body>
@@ -151,7 +151,7 @@ v-show&v-if区别
 
 + 当需要经常切换隐藏显示时,如用户选择隐藏与显示某些元素,使用v-show
 
-##### v-for
+#### v-for
 
 ```html
 <body>
@@ -266,7 +266,7 @@ app.mount("#app")
 
 故,可以使用如上方法解决v-for&v-if不兼容的问题.<template>标签属于Vue中的业务逻辑标签,不在HTML中进行展示
 
-##### v-html
+#### v-html
 
 ```html
 <script>
@@ -295,11 +295,11 @@ app.mount("#app")
 </script>
 ```
 
-##### v-once
+#### v-once
 
 v-once这个指令不需要任何表达式，它的作用就是定义它的元素或组件只会渲染一次，包括元素或者组件的所有字节点。首次渲染后，不再随着数据的改变而重新渲染。也就是说使用v-once，那么该块都将被视为静态内容。
 
-#### 事件
+### 事件
 
 `v-on`监听事件
 
@@ -368,17 +368,17 @@ v-once这个指令不需要任何表达式，它的作用就是定义它的元�
 
 # 双向绑定
 
-#### 双向数据绑定
+### 双向数据绑定
 
 Vue.js是-个MVVM框架，即数据双向绑定，即当数据发生变化的时候，视图也就发生变化，当视图发生变化的时候,数据也会跟着同步变化。这也算是Vue.js的精髓之处了。
 
 值得注意的是，数据双向绑定，一定是对于UI控件来说的，非UI控件不会涉及到数据双向绑定。单向数据绑定是使用状态管理工具的前提。如果我们使用vuex ，那么数据流也是单项的，这时就会和双向数据绑定有冲突。
 
-#### 为什么要实现数据的双向绑定
+### 为什么要实现数据的双向绑定
 
 在Vue.js中,如果使用vuex，实际上数据还是单向的，之所以说是数据双向绑定，这是用的UI控件来说，对于我们处理表单，Vue.js的双向数据绑定用起来就特别舒服了。即两者并不互斥,在全局性数据流使用单项，方便跟踪;局部性数据流使用双向，简单易操作。
 
-#### 在表单中使用数据双向绑定
+### 在表单中使用数据双向绑定
 
 可以用`v-model`指令在表单<input>、<textarea> 及<select> 元素上创建双向数据绑定。它会根据控件类型自动选取正确的方法来更新元素。尽管有些神奇，但v-model本质上不过是语法糖。它负责监听用户的输入事件以更新数据，并对一些极端场景进行一些特殊处理。
 
@@ -435,6 +435,7 @@ Vue.js是-个MVVM框架，即数据双向绑定，即当数据发生变化的时
         <option>A</option>
         <option>B</option>
         <option>C</option>
+        <!--为支持iOS多端适配，加入一个属性为disable的选项-->
     </select>
 
     <p>
@@ -453,13 +454,46 @@ Vue.js是-个MVVM框架，即数据双向绑定，即当数据发生变化的时
 </body>
 ```
 
+```vue
+const app = Vue.createApp({
+    data(){
+        return {
+            message:'',
+            check:false,
+            checked:[],
+            witchOne:''
+        }
+    },
+    template:`
+        <div>
+            {{ message }}
+            <input type="text" v-model="message">
+            <textarea v-model="message" />
+            <!--Vue3实现了使用单个textarea＋v-model的形势来进行数据绑定-->
+            <div>
+              {{ check }}<input type="checkbox" v-model="check">
+            </div>
+            <div>
+                {{ checked }}
+                Ruby<input type="checkbox" v-model="checked" value="Ruby">
+                Blake<input type="checkbox" v-model="checked" value="Blake">
+                Yang<input type="checkbox" v-model="checked" value="Yang">
+                <!--多选，checked为数组形式变量，被选中的标签的value值通过v-model绑定到checked中-->
+            </div>
+            <div>
+                {{ witchOne }}
+                Ruby<input type="radio" v-model="witchOne" value="Ruby">
+                Blake<input type="radio" v-model="witchOne" value="Blake">
+                Yang<input type="radio" v-model="witchOne" value="Yang">
+                <!--单选，使用v-model绑定withOne变量，当被选中时，withOne的值改为选中的标签的value值-->
+            </div>
+        </div>
+    `
+}).mount("#app")
+```
 **注意:如果`v-model`表达式的初始值未能匹配任何选项，<select> 元素将被渲染为"未选中”状态。在iOS中，这会使用户无法选择第一个选项。因为这样的情况下，ios 不会触发change事件。因此,更推荐像上面这样提供一个值为空的禁用选项。**
 
-```html
-<body>
-    <div id="app"></div>
-</body>
-<script>
+```vue
     Vue.createApp({
         data(){
             return {
@@ -484,10 +518,90 @@ Vue.js是-个MVVM框架，即数据双向绑定，即当数据发生变化的时
           </div>
         `
     }).mount("#app");
-</script>
+```
+
+```vue
+const app = Vue.createApp({
+    data(){
+        return {
+            checked: false,
+            name:'Unchecked'
+        }
+    },
+    template:`
+        <div>
+            <div>
+                {{ checked }}
+                <input
+                    type="checkbox"
+                    v-model="checked"
+                >
+            </div>
+            <div>
+                {{ name }}
+                <input
+                    type="checkbox"
+                    v-model="name"
+                    true-value="Hello, world!"
+                    false-value="Vue!"
+                >
+                <!--通过使用true-value&false-value来绑定选中与未选中时此标签的值，代替了默认的值“true&false”-->
+            </div>
+        </div>
+    `
+})
+app.mount("#app")
+```
+
+### 表单双向绑定中的修饰符
+
+```vue
+const app = Vue.createApp({
+    data(){
+        return {
+            checked: false,
+            name:'Unchecked',
+            message:''
+        }
+    },
+    template:`
+        <div>
+            <div>
+                {{ checked }}
+                <input
+                    type="checkbox"
+                    v-model="checked"
+                >
+            </div>
+            <div>
+                {{ name }}
+                <input
+                    type="checkbox"
+                    v-model="name"
+                    true-value="Hello, world!"
+                    false-value="Vue!"
+                >
+            </div>
+            <div>
+                <input type="text" v-model.lazy="message">
+                <!--lazy修饰符，只有在标签失去焦点时数据才会变化-->
+                {{ message }}
+                {{ typeof message}}
+              <!--typeof message显示当前的message的类型-->
+                <input type="text" v-model.number="message">
+              <!--输入框中的默认为string字符串类型，number修饰符可以将输入的数字转换为number类型-->
+                <input type="text" v-model.trim="message">
+                <!--自动将输入框中的空格取消-->
+            </div>
+        </div>
+    `
+})
+app.mount("#app")
 ```
 
 # 组件
+
+### 组件初识
 
 组件是可复用的vue实例，就是一组可以重复使用的模板，和JSTL的自定义标签、Thymeleaf的`th:fragment`等框架有异曲同工之妙。通常，一个应用会以一棵嵌套的组件树的形式来组织
 
@@ -572,6 +686,255 @@ Vue.js是-个MVVM框架，即数据双向绑定，即当数据发生变化的时
     app.mount("#app");
 </script>
 ```
+
+### 组件集
+
+#### 全局组件定义和复用性
+
+**全局组件**定义
+
+```vue
+const app = Vue.createApp({
+    template:`
+        <Website />
+        <Description />
+    `
+});
+app.component('Website',{
+    template:`
+        <h2>Hello World</h2>
+    `
+})
+app.component('Description',{
+    template:`
+        <div>Vue</div>
+    `
+})
+const vm = app.mount("#app");
+```
+
+全局组件
+
++ 优
+  + 定义在全局中，在任何地方都可以使用，方便简单
++ 缺
+  + 需要加载完全部全局组件才能打开界面，因此网页打开会变慢
+  + 当页面加载有就一直存在，会对性能产生一定影响
+
+**复用性**
+
+每个组件单独运行，互不干扰
+
+```vue
+const app = Vue.createApp({
+    template:`
+        <Website />
+        <Description />
+        <count />
+        <count />
+        <count />
+		<!--三个count互不干扰，彼此独立运行-->
+    `
+});
+app.component('Website',{
+    template:`
+        <h2>Hello World</h2>
+    `
+})
+app.component('Description',{
+    template:`
+        <div>Vue</div>
+    `
+})
+app.component('count',{
+    data(){
+        return {
+            count:'0'
+        }
+    },
+    template:`
+        <div @click="count++">
+            {{ count }}
+        </div>
+    `
+})
+const vm = app.mount("#app");
+```
+
+#### 局部组件创建和注册方法
+
+局部组件需要注册才能使用
+
+> 通过此处进行局部组件的创建
+
+```vue
+const count = {
+    data(){
+        return {
+            count:0
+        }
+    }, 
+    template:`
+        <div @click="count++">
+            {{ count }}
+        </div>
+    `
+}
+```
+
+>  通过此处进行局部组件的注册，此为简写法
+
+```vue
+const app = Vue.createApp({
+    components:{count},
+    template:`
+        <Website />
+        <count />
+    `
+});
+```
+
+> 通过键值对进行注册
+
+```vue
+const app = Vue.createApp({
+    components:{
+		click-add-one:count
+	},
+    template:`
+        <Website />
+        <click-add-one />
+		<!--需要注意的是，对于驼峰命名法有潜规则为：采用键值加横杠的形式，如“click-add-one”-->
+    `
+});
+```
+
+#### 父子组件的静态和动态传值
+
+静态传值
+
+```vue
+    const app = Vue.createApp({
+        template:`
+            <div>Vue</div>
+            <son name="Vue" />
+        `
+    });
+    app.component('son',{
+        props:['name'],
+        template:`
+            <div>{{ name }} div</div>
+        `
+    })
+    const vm = app.mount("#app");
+```
+
++ 父组件使用name关键字将值传给子组件，子组件通过props以数组的形式绑定name关键字，并在模板中{{name}}应用
++ 静态传值只能传字符串类型的值
+
+
+动态传值
+
+```vue
+const app = Vue.createApp({
+    data(){
+        return {
+            name:'Hello, world'
+        }
+    },
+    template:`
+        <div>Vue</div>
+        <son :name="name" />
+    `
+});
+app.component('son',{
+    props:['name'],
+    template:`
+        <div>{{ name }} div</div>
+    `
+})
+const vm = app.mount("#app");
+```
+
++ 使用v-bind绑定父组件中的name属性，在data（）中定义name
+
++ 动态传值可以传非字符串类型的值
+
++ 动态传值可以传入函数
+
+  ```vue
+      const app = Vue.createApp({
+          data(){
+              return {
+                  name:'Hello, world',
+                  pay:()=>{
+                      alert("Long May The Sunshine")
+                  }
+              }
+          },
+          template:`
+              <div>Vue</div>
+              <son :name="name" :pay="pay" />
+          `
+      });
+      app.component('son',{
+          props:['name','pay'],
+          methods:{
+              handleClick() {
+                  alert("money money money")
+                  this.pay()
+              }
+          },
+          template:`
+              <div @click="handleClick">{{ name }} div</div>
+          `
+      })
+      const vm = app.mount("#app");
+  ```
+
+  使用v-bind:pay=“pay”绑定data（）中的pay函数，子函数中，用props接收pay
+
+#### 组件传值的校验
+
+对传入的值的类型进行校验
+
+```vue
+    app.component('son',{
+        props:{ // 不使用数组形式，而是使用对象的形式对传入的值进行校验
+            name:String, // 类型的校验 支持 Sting Boolean Array Object Function Symbol
+        },
+        template:`
+            <div>{{ name }}</div>
+        `
+    })
+```
+
+同时进行类型与非空等多个校验
+
+```vue
+    app.component('son',{
+        props:{
+            name:{
+                type:String, // 类型判断
+                required:true // 非空判断
+				default:'Volerde' // 默认值
+				validator:function(value){
+					// 任意逻辑代码
+					return value.search("Volerde") != -1 // search：JavaScript查找是否出现“Volerde”，返回值为起始下标
+     			}
+            },
+        },
+        template:`
+            <div>{{ name }}</div>
+        `
+    })
+```
+
+使用{}，以对象的形式进行多个校验
+
+#### 单向数据流机制
+
+
 
 # createApp()和mount()方法
 
@@ -661,7 +1024,7 @@ Vue实例有一个完整的生命周期，也就是从开始创建、初始化�
 
 # 模板
 
-##### 动态参数和阻止默认事件
+### 动态参数和阻止默认事件
 
 ```javascript
     const app = Vue.createApp({
@@ -703,7 +1066,7 @@ Vue实例有一个完整的生命周期，也就是从开始创建、初始化�
     app.mount("#app")
 ```
 
-##### 条件判断
+### 条件判断
 
 使用三目运算符进行判断,从而改变class
 
@@ -741,7 +1104,7 @@ Vue实例有一个完整的生命周期，也就是从开始创建、初始化�
 </style>
 ```
 
-##### 样式绑定
+### 样式绑定
 
 ```html
 <style>
@@ -832,7 +1195,7 @@ app.component('sonCom',{
 })
 ```
 
-##### 行内样式
+### 行内样式
 
 ```javascript
 const app = Vue.createApp({
@@ -855,7 +1218,7 @@ app.mount("#app")
 
 # 计算属性
 
-#### 什么是计算属性
+### 什么是计算属性
 
 计算属性的重点突出在属性二字上，首先是属性，其次是计算的能力，此计算为一个函数：即这是一个能够将计算结果缓存起来的一个属性，暂且可以理解为缓存
 
@@ -1100,11 +1463,11 @@ Axios是一个开源的可以用在浏览器端和NodeJS的异步通信框架，
 + 自动转换JSON数据
 + 客户端支持防御XSRF(跨站请求伪造)
 
-#### 为什么使用Axios
+### 为什么使用Axios
 
 `Vue.js`是一个视图层框架，并且作者(尤雨溪)严格遵守SoC(关注度分离原则)，所以`Vue.js`不包括AJAX通信功能。为了解决通信问题，作者单独开发了一个名为`vue-resource`的插件，不过在进入2.0版本后停止了对该插件的维护，并推荐使用`Axios`框架。少用jQuery，因为它操作DOM太频繁。
 
-#### 第一个Axios应用程序
+### 第一个Axios应用程序
 
 开发的接口大部分采用JSON格式，创建一个data.json的文件，并填入以下内容，放在项目的根目录下
 

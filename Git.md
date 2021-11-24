@@ -109,8 +109,7 @@ Git本地有三个工作区域：工作目录(Working Directory)、暂存区(Rep
    git push -u origin master
    ```
 
-
-### git others
+### git 查看提交记录
 
 1. 查看本地提交记录
 
@@ -144,9 +143,69 @@ Git本地有三个工作区域：工作目录(Working Directory)、暂存区(Rep
    git push origin new_branch
    ```
 
-   
+
+### git暂存当前工作内容
+
+1. `git stash`会把所有未提交的修改（包括暂存的和非暂存的）都保存起来，用于后续恢复当前工作目录。
+
+   ```bash
+   git stash
+   git stash save “message” # 给本次的stash添加一个message
+   ```
+
+   + `git stash`使用后会将当前工程回到最后一次提交的状态
+
+   + stash是本地的，不会通过`git push`命令上传到git server上。
+
+2. 重新应用缓存的stash
+
+   ```bash
+   git stash pop
+   git stash apply
+   ```
+
+   + 这个指令将缓存堆栈中的第一个stash删除，并将本次stash后的修改应用到当前的工作目录下。
+   + 使用`git stash apply`命令，将缓存堆栈中的stash**多次应用到工作目录中**，但并**不删除stash拷贝**。
+   + 使用`git stash apply`命令时可以通过名字指定使用哪个stash，默认使用最近的stash（即stash@{0}）。
+
+3. 查看现有stash
+
+   ```bash
+   git stash list
+   ```
+
+4. 移除stash
+
+   ```bash
+   git stash drop
+   # git stash drop stash@{0}
+   ```
+
+   + 使用`git stash drop`命令，后面可以跟着一个stash的名字，或者使用`git stash clear`命令，删除所有缓存的stash
+
+5. 查看指定stash的diff
+
+   ```bash
+   git stash show
+   git stash show -p
+   ```
+
+   + 使用`git stash show`命令，后面可以跟着stash名字
+   + 在命令后面添加-p或者--patch可以查看特定stash的全部diff
+
+6. 暂存未跟踪或忽略的文件
+
+   + 默认情况下，`git stash`会缓存下列文件
+     + 添加到缓存区的修改（staged changes）
+     + git跟踪的但并为添加到缓存区的修改（unstaged changes）
+   + 默认不会缓存的文件
+     + 在工作目录中的新文件（untracked files）
+     + 被忽略的文件（ignored files）
+   + `git stash`命令提供了参数用于缓存上面两种类型的文件。使用`-u`或者`--include-untracked`可以stash untracked文件。使用`-a`或者`--all`命令可以stash当前目录下的所有修改。
 
 ### issues
+
+此issues用于收集本人在使用git过程中遇到的问题以及对应的解决方法
 
 **Git在push推送时，报错提示信息如下：**
 
