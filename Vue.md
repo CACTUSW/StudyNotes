@@ -1,4 +1,8 @@
-# MVVM模式的实现者
+# Vue
+
+## 概述
+
+**MVVM模式的实现者**
 
 + Model：模型层，在这里表示JavaScript对象
 + View：视图层，表示DOM（HTML操作的元素）
@@ -11,15 +15,42 @@
 
 Vue.js就是MVVM的实现者，它的核心就是实现了DOM监听与数据绑定
 
-# 为什么要是用Vue.js
+**为什么要是用Vue.js**
 
 1. 轻量级，体积小
+
 2. 移动优先，更适合移动端，比如移动端的touch事件
+
 3. 易上手，学习曲线平稳，文档齐全
+
 4. 吸取了Angular（模块化）和React（虚拟DOM） 的长处，并拥有自己的独特功能，比如：计算属性
+
 5. 开源，社区活跃度高
 
-# 第一个Vue
+**createApp()和mount()方法**
+
+```html
+<body>
+<div id="app"></div>
+</body>
+<script>
+    const app = Vue.createApp({ // 此花括号为参数
+        data(){
+          return {
+              message:'Vue'
+          }
+        },
+        template:`
+          <div>{{message}}</div>
+        `
+    })
+
+    const vm = app.mount("#app") // 挂在app实例
+    console.log(vm) // MVVM     M->model    V->view     VM->ViewModel   数据视图连接层
+</script>
+```
+
+**第一个Vue**
 
 ```html
 <!--  导入Vue.js-->
@@ -82,13 +113,11 @@ Vue.js就是MVVM的实现者，它的核心就是实现了DOM监听与数据绑�
 </script>
 ```
 
-
-
-# 基础语法
+## 基础语法
 
 ### 指令
 
-#### v-bind
+v-bind
 
 ```html
 <html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
@@ -120,7 +149,7 @@ v-bind等被称为指令，指令带有前缀 v-，以表示他们是Vue提供�
 
 在这里，该指令的意思为：“将这个元素节点的title特性和Vue实例的massage属性绑定”。
 
-#### v-if，v-else
+v-if，v-else
 
 ```html
 <body>
@@ -151,7 +180,7 @@ v-show&v-if区别
 
 + 当需要经常切换隐藏显示时,如用户选择隐藏与显示某些元素,使用v-show
 
-#### v-for
+v-for
 
 ```html
 <body>
@@ -266,7 +295,7 @@ app.mount("#app")
 
 故,可以使用如上方法解决v-for&v-if不兼容的问题.<template>标签属于Vue中的业务逻辑标签,不在HTML中进行展示
 
-#### v-html
+ v-html
 
 ```html
 <script>
@@ -295,7 +324,7 @@ app.mount("#app")
 </script>
 ```
 
-#### v-once
+v-once
 
 v-once这个指令不需要任何表达式，它的作用就是定义它的元素或组件只会渲染一次，包括元素或者组件的所有字节点。首次渲染后，不再随着数据的改变而重新渲染。也就是说使用v-once，那么该块都将被视为静态内容。
 
@@ -366,7 +395,7 @@ v-once这个指令不需要任何表达式，它的作用就是定义它的元�
 
 
 
-# 双向绑定
+## 双向绑定
 
 ### 双向数据绑定
 
@@ -599,9 +628,7 @@ const app = Vue.createApp({
 app.mount("#app")
 ```
 
-# 组件
-
-### 组件初识
+## 组件
 
 组件是可复用的vue实例，就是一组可以重复使用的模板，和JSTL的自定义标签、Thymeleaf的`th:fragment`等框架有异曲同工之妙。通常，一个应用会以一棵嵌套的组件树的形式来组织
 
@@ -687,9 +714,7 @@ app.mount("#app")
 </script>
 ```
 
-### 组件集
-
-#### 全局组件定义和复用性
+### 全局组件定义和复用性
 
 **全局组件**定义
 
@@ -710,7 +735,6 @@ app.component('Description',{
         <div>Vue</div>
     `
 })
-const vm = app.mount("#app");
 ```
 
 全局组件
@@ -761,7 +785,7 @@ app.component('count',{
 const vm = app.mount("#app");
 ```
 
-#### 局部组件创建和注册方法
+### 局部组件创建和注册方法
 
 局部组件需要注册才能使用
 
@@ -809,9 +833,9 @@ const app = Vue.createApp({
 });
 ```
 
-#### 父子组件的静态和动态传值
+### 父子组件的静态和动态传值
 
-静态传值
+**静态传值**
 
 ```vue
     const app = Vue.createApp({
@@ -832,8 +856,7 @@ const app = Vue.createApp({
 + 父组件使用name关键字将值传给子组件，子组件通过props以数组的形式绑定name关键字，并在模板中{{name}}应用
 + 静态传值只能传字符串类型的值
 
-
-动态传值
+**动态传值**
 
 ```vue
 const app = Vue.createApp({
@@ -894,9 +917,9 @@ const vm = app.mount("#app");
 
   使用v-bind:pay=“pay”绑定data（）中的pay函数，子函数中，用props接收pay
 
-#### 组件传值的校验
+### 组件传值的校验
 
-对传入的值的类型进行校验
+**对传入的值的类型进行校验**
 
 ```vue
     app.component('son',{
@@ -909,7 +932,7 @@ const vm = app.mount("#app");
     })
 ```
 
-同时进行类型与非空等多个校验
+**同时进行类型与非空等多个校验**
 
 ```vue
     app.component('son',{
@@ -932,34 +955,289 @@ const vm = app.mount("#app");
 
 使用{}，以对象的形式进行多个校验
 
-#### 单向数据流机制
+### 单向数据流机制
 
-
-
-# createApp()和mount()方法
-
-```html
-<body>
-<div id="app"></div>
-</body>
-<script>
-    const app = Vue.createApp({ // 此花括号为参数
-        data(){
-          return {
-              message:'Vue'
-          }
-        },
-        template:`
-          <div>{{message}}</div>
-        `
-    })
-
-    const vm = app.mount("#app") // 挂在app实例
-    console.log(vm) // MVVM     M->model    V->view     VM->ViewModel   数据视图连接层
-</script>
+```vue
+const app = Vue.createApp({
+    data(){
+        return {
+            count:0
+        }
+    },
+    template:`
+        <div>Vue</div>
+        <counter :count="count"/>
+    `
+})
+app.component('counter',{
+    props:['count'],
+    template:`
+        <div @click="count++">{{ count }}</div>
+    `
+})
+const vm = app.mount("#app")
 ```
 
-# 生命周期
+此时并不能实现点击加一的效果。这就是单向数据流机制限制的结果
+
+**什么是单向数据流**
+
+> 所有的prop都使得其父子prop之间形成了一个单向下行绑定：父级prop的更新会向下流动到子组件中，反过来则不行。——Vue官方
+
+简单来说就是
+
++ 数据从父级组件传递给子组件，只能单向绑定。子组件内部不能直接修改从父组件传递过来的数据。
+
+这就解释了为什么上述的程序不能正常工作的原因了。
+
+```vue
+app.component('counter',{
+    props:['count'],
+    data(){
+        return {
+            newCount: this.count
+        }
+    },
+    template:`
+        <div @click="newCount++">{{ newCount }}</div>
+    `
+})
+```
+
+这样就可以进行修改了
+
+总结：
+
++ 单向数据流就是父组件可以向子组件传递数据，但是子组件不能修改数据
+
+**为什么要有单向数据流机制**
+
+单向数据流的最终目的就是为了降低组件的耦合段，增加独立性。当页面中同时调用类三个<counter />组件时，没有单向数据流的机制，很容易变成一个组件数值变化，其他的组件的数值也跟着变化的现象。这会使得页面中组件的数据耦合在一起，没办法单独使用。
+
+### non-props使用
+
+**什么是non-props**
+
+子组件没有接收父组件传递过来的参数，而子组件完全不变的复制了父组件的属性到自己的标签上，就叫做non-props属性
+
+```vue
+const app = Vue.createApp({
+	template:`
+      <Hello msg="Hello"/>
+    `
+})
+app.component('Hello',{
+    template:`
+        <div>Hello World</div>
+    `
+})
+```
+
+如上述，`msg="Hello"`传给了子组件,但是子组件并没有接收,则此时,`msg="Hello"`这个属性就会出现在子组件的标签上
+
+```vue
+const app = Vue.createApp({
+    template:`
+      <Hello msg="Hello"/>
+    `
+})
+app.component('Hello',{
+    props:['msg'],
+    template:`
+        <div>Hello World</div>
+    `
+})
+```
+
+现在给子组件加上了`props:['msg']`后,子组件接收父组件传来的值,`msg="Hello"`这个属性不会出现在子组件的标签上
+
+```vue
+app.component('Hello',{
+    inheritAttrs:false,
+    template:`
+        <div>Hello World</div>
+    `
+})
+```
+
+可以通过在子组件中设置`inheritAttrs:false`的方式,来禁止non-props.此属性默认为`true`
+
+**一些应用**
+
+通过non-props给子组件设置样式
+
+```vue
+const app = Vue.createApp({
+    template:`
+      <Hello style="color: red"/>
+    `
+})
+app.component('Hello',{
+    template:`
+        <div>
+            <div>Hello World!</div>
+            <div>Hello World!</div>
+            <div>Hello World!</div>
+        </div>
+    `
+})
+```
+
+给子组件中某个特定标签传递属性
+
+```vue
+const app = Vue.createApp({
+    template:`
+      <Hello style="color: red"/>
+    `
+})
+app.component('Hello',{
+    template:`
+            <div v-bind="$attrs">Hello World!</div>
+            <div>Hello World!</div>
+            <div>Hello World!</div>
+    `
+})
+```
+
+通过使用`v-bind="$attrs"`,将父组件传给子组件的全部属性都绑定到某个特定的标签上
+
+```vue
+const app = Vue.createApp({
+    template:`
+      <Hello style='color: red' msg="Hello"/>
+    `
+})
+app.component('Hello',{
+    template:`
+            <div v-bind:style="$attrs.style">Hello World!</div>
+            <div>Hello World!</div>
+            <div>Hello World!</div>
+    `
+})
+```
+
+通过`v-bind:style="$sttrs.style"`的方式可以只将style的值传给特定的标签
+
+**在业务逻辑中使用non-props**
+
+```vue
+const app = Vue.createApp({
+    template:`
+      <Hello style='color: red' msg="Hello"/>
+    `
+})
+app.component('Hello',{
+    mounted(){
+        console.log(this.$attrs.msg)
+    },
+    template:`
+            <div v-bind:style="$attrs.style">Hello World!</div>
+            <div>Hello World!</div>
+            <div>Hello World!</div>
+    `
+})
+```
+
+`this.$attrs`是Vue的一个常用的属性
+
+### 子组件调用父组件方法,传值和校验
+
+**子组件调用父组件**
+
+```vue
+methods:{
+	handleAddCounter(){
+		this.count++
+	}
+},
+template:`
+	<div>Vue</div>
+	<counter :count="count" @add="handleAddCounter"/>
+`
+
+app.component('counter',{
+    props:['count'],
+    emits:['add'],
+    methods:{
+        handleClick(){
+            this.$emit('add')
+        }
+    },
+    template:`
+        {{ count }}
+        <div @click="handleClick">Click me</div>
+    `
+})
+```
+
+父组件中声明了方法:`handleAddCounter`
+
+子组件通过在`template`中编写一个`click`事件,然后调用**子组件的`handleClick`方法**,在子组件的方法中通过`$emit`调用父组件的响应事件`add`.使用`emit`需要先在子组件中进行声明
+
+`add`为响应事件,在父组件的`template`中,添加一个`add`响应事件,然后响应事件再去调用方法`handleAddCounter`.
+
+**子组件向父组件传递参数**
+
+```vue
+methods:{
+    handleClick(){
+        this.$emit('add',2)
+    }
+},
+```
+
+如上述,在`$emit('add',2)`加入了2这个参数,在父组件中可以使用在方法中接收这个参数`param`
+
+```vue
+methods:{
+    handleAddCounter(param){
+        this.count +=param
+    }
+},
+```
+
+此时就完成了子组件向父组件传值的操作.
+
+实际操作中更推荐将业务逻辑写在子组件中,只将最后的结果传递给父组件
+
+> 父组件
+
+```vue
+methods:{
+    handleAddCounter(param){
+        this.count = param
+    }
+},
+```
+
+> 子组件
+
+```vue
+methods:{
+    handleClick(){
+        this.$emit('add',this.count+2)
+    }
+},
+```
+
+**对传递值进行校验**
+
+```vue
+emits:{
+    add:(value)=>{
+        return value < 20
+    }
+},
+```
+
+通过`emit`进行传递值的校验,上述为校验传递到`add`的值不大于20,返回值为布尔型
+
+### 组件中插槽的使用(Slot)
+
+
+
+## 生命周期
 
 Vue实例有一个完整的生命周期，也就是从开始创建、初始化数据、编译模板、挂载DOM、渲染-->更新-->渲染、卸载等一系列过程，我们称这是Vue的生命周期。即Vue实例从创建到销毁的过程，就是生命周期。
 
@@ -1022,7 +1300,7 @@ Vue实例有一个完整的生命周期，也就是从开始创建、初始化�
 </script>
 ```
 
-# 模板
+## 模板
 
 ### 动态参数和阻止默认事件
 
@@ -1216,7 +1494,7 @@ const app = Vue.createApp({
 app.mount("#app")
 ```
 
-# 计算属性
+## 计算属性
 
 ### 什么是计算属性
 
@@ -1260,7 +1538,7 @@ app.mount("#app")
     app.mount("#app");
 ```
 
-# 侦听器(监听器)-watch
+## 侦听器(监听器)-watch
 
 ```javascript
 const app = Vue.createApp({
@@ -1303,7 +1581,7 @@ app.mount("#app");
 + `computed`和`method`都能实现的功能,建议使用`computed`,因为有缓存,不用渲染页面就刷新
 + `computed`和`watch`都能实现的功能,建议使用`computed`,因为更加简洁
 
-# 绑定事件
+## 绑定事件
 
 ### 方法和参数
 
@@ -1448,7 +1726,7 @@ template:`
 
 
 
-# Axios异步通信
+## Axios异步通信
 
 Axios是一个开源的可以用在浏览器端和NodeJS的异步通信框架，它的主要作用就是实现Ajax异步通信
 
@@ -1463,11 +1741,11 @@ Axios是一个开源的可以用在浏览器端和NodeJS的异步通信框架，
 + 自动转换JSON数据
 + 客户端支持防御XSRF(跨站请求伪造)
 
-### 为什么使用Axios
+**为什么使用Axios**
 
 `Vue.js`是一个视图层框架，并且作者(尤雨溪)严格遵守SoC(关注度分离原则)，所以`Vue.js`不包括AJAX通信功能。为了解决通信问题，作者单独开发了一个名为`vue-resource`的插件，不过在进入2.0版本后停止了对该插件的维护，并推荐使用`Axios`框架。少用jQuery，因为它操作DOM太频繁。
 
-### 第一个Axios应用程序
+**第一个Axios应用程序**
 
 开发的接口大部分采用JSON格式，创建一个data.json的文件，并填入以下内容，放在项目的根目录下
 
