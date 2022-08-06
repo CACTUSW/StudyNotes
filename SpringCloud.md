@@ -6,49 +6,49 @@
 三层架构 + MVC
 
 框架：
-	Spring IOC AOP
-	
-	SpringBoot，新一代的JavaEE开发标准 ——>自动装配
-	
-	模块化&all in one ->代码不变
-	
+    Spring IOC AOP
+
+    SpringBoot，新一代的JavaEE开发标准 ——>自动装配
+
+    模块化&all in one ->代码不变
+
 微服务架构4个核心问题
-	1.服务很多,客户端该怎么访问?
-	2.这么多服务,服务间该如何通信?
-	3.这么多服务该如何治理?
-	4.服务挂了怎么办?	
-	
+    1.服务很多,客户端该怎么访问?
+    2.这么多服务,服务间该如何通信?
+    3.这么多服务该如何治理?
+    4.服务挂了怎么办?    
+
 解决方案:
-	Spring Cloud ->生态	基于SpringBoot
-	
-	1.Spring Cloud Netflix	一站式解决方案
-	API网关,zuul组件
-	Feign --- HTTPClient --- Http通信方式,同步,阻塞
-	服务注册发现: Eureka
-	熔断机制: Hystrix
-	
-	2.Apache Dubbo Zookeeper	半自动,需要整合别人的
-	API:没有,找第三方插件,或者自己实现
-	DUbbo
-	Zookeeper
-	没有: 借助Hystrix
-	
-	DUbbo这个方案并不完善
-	
-	3.Spring Cloud Alibaba	新的一站式解决方案
-	
+    Spring Cloud ->生态    基于SpringBoot
+
+    1.Spring Cloud Netflix    一站式解决方案
+    API网关,zuul组件
+    Feign --- HTTPClient --- Http通信方式,同步,阻塞
+    服务注册发现: Eureka
+    熔断机制: Hystrix
+
+    2.Apache Dubbo Zookeeper    半自动,需要整合别人的
+    API:没有,找第三方插件,或者自己实现
+    DUbbo
+    Zookeeper
+    没有: 借助Hystrix
+
+    DUbbo这个方案并不完善
+
+    3.Spring Cloud Alibaba    新的一站式解决方案
+
 新概念: 服务网格~ Server Mesh
 
 万变不离其宗
-	1.Api
-	2.HTTP,RPC
-	3.注册和发现
-	4.熔断机制
-	
+    1.Api
+    2.HTTP,RPC
+    3.注册和发现
+    4.熔断机制
+
 本质 ->网络不可靠
 ```
 
-##  Question
+## Question
 
 1. 什么是微服务?
 2. 微服务之间如何独立通信?
@@ -62,8 +62,6 @@
 ## SpringCloud概述
 
 ### 什么是SpringCloud?
-
-
 
 ### SpringCloud和SpringBoot关系
 
@@ -80,18 +78,18 @@
 
 #### Dubbo和SpringCloud对比
 
-|              | Dubbo         | SpringCloud                  |
-| ------------ | ------------- | ---------------------------- |
+|        | Dubbo         | SpringCloud                  |
+| ------ | ------------- | ---------------------------- |
 | 服务注册中心 | Zookeeper     | Spring Cloud Netflix Eureka  |
 | 服务调用方式 | RPC           | REST API                     |
-| 服务监控     | Dubbo-monitor | Spring Boot Admin            |
-| 断路器       | 不完善        | Spring Cloud Netflix Hystrix |
-| 服务网关     | 无            | Spring Cloud Netflix Zuul    |
-| 分布式配置   | 无            | Spring Cloud Config          |
-| 服务跟踪     | 无            | Spring Cloud Sleuth          |
-| 消息总线     | 无            | Spring Cloud Bus             |
-| 数据流       | 无            | SpringCloud Stream           |
-| 批量任务     | 无            | Spring Cloud Task            |
+| 服务监控   | Dubbo-monitor | Spring Boot Admin            |
+| 断路器    | 不完善           | Spring Cloud Netflix Hystrix |
+| 服务网关   | 无             | Spring Cloud Netflix Zuul    |
+| 分布式配置  | 无             | Spring Cloud Config          |
+| 服务跟踪   | 无             | Spring Cloud Sleuth          |
+| 消息总线   | 无             | Spring Cloud Bus             |
+| 数据流    | 无             | SpringCloud Stream           |
+| 批量任务   | 无             | Spring Cloud Task            |
 
 **最大区别:SpringCloud抛弃了Dubbo的RPC通信,采用的是基于HTTP的REST方式**
 
@@ -106,21 +104,21 @@
 + 回忆Spring，SpringMVC，MyBatis等以往学过的知识...
 
 + Maven的分包分模块架构复习
-
+  
   ```markdown
   一个简单的Maven模块结构是这样的:
   
   -- app-parent: 一个父类项目(app-parent)聚合了很多子项目(app-util,app-dao,app-web...)
-  	|-- pom.xml
-  	|
-  	|-- app-core
-  	||---- pom.xml
-  	|
-  	|-- app-web
-  	||---- pom.xml
-  	......
+      |-- pom.xml
+      |
+      |-- app-core
+      ||---- pom.xml
+      |
+      |-- app-web
+      ||---- pom.xml
+      ......
   ```
-
+  
   一个父工程带着多个子Module子模块
   MicroServiceCloud父工程(Project)下初次带着3个子模块(Module)
   
@@ -130,16 +128,16 @@
 
 ### SpringCloud版本选择
 
-| SpringBoot | SpringCloud    | 关系                                       |
-| ---------- | -------------- | ------------------------------------------ |
-| 1.2.x      | Angel版本      | 兼容SpringBoot 1.2.x                       |
+| SpringBoot | SpringCloud  | 关系                                    |
+| ---------- | ------------ | ------------------------------------- |
+| 1.2.x      | Angel版本      | 兼容SpringBoot 1.2.x                    |
 | 1.3.x      | Brixton版本    | 兼容SpringBoot1.3.x,也兼容SpringBoot 1.4.x |
 | 1.4.x      | Camden版本     | 兼容SpringBoot1.4.x,也兼容SpringBoot 1.5.x |
 | 1.5.x      | Dalston版本    | 兼容SpringBoot1.4.x,不兼容SpringBoot 1.5.x |
 | 1.5.x      | Edgware版本    | 兼容SpringBoot1.5.x,不兼容SpringBoot 2.0.x |
 | 2.0.x      | Finchley版本   | 兼容SpringBoot1.4.x,不兼容SpringBoot 2.0.x |
-| 2.1.x      | Greenwitch版本 |                                            |
-|            |                |                                            |
+| 2.1.x      | Greenwitch版本 |                                       |
+|            |              |                                       |
 
 ## Eureka服务注册与发现
 
@@ -150,15 +148,18 @@
 + Eureka是Netflix的一个子模块，也是核心模块之一。Eureka是一个基于REST的服务，用于定位服务，以实现云端中间层服务发现和故障转移，服务注册与发现对于微服务来说非常重要，有了服务发现与注册，只需要使用服务的标识符，就可以访问到服务，而需要修改服务调用的配置文件了，功能类似于Dubbo的注册中心，比如Zookeeper。
 
 ### 原理
+
 + Eureka的基本架构
+  
   + Spring Cloud封装了Netflix公司开发的Eureka模块来实现服务注册和发现（对比Zookeeper）
   + Eureka采用了C/S的架构设计，Eureka作为服务注册功能的服务器，是服务注册中心
   + 而系统中的其他微服务，使用Eureka的客户端连接到EurekaServer。这样系统的维护人员就可以通过EurekaServer来监控系统中的各个微服务是否正常运行。SpringCloud的一些其他模块（比如Zuul）就可以通过Eureka Server来发现系统中的其他微服务，并执行相关的逻辑
   + Eureka包含两个组件：EurekaServer 和 Eureka Client
   + Eureka Server提供服务注册服务，各个节点启动后，会在Eureka Server中进行注册，这样Eureka Server中的服务注册表中将会列出所有可用的服务节点的信息，服务节点的信息可以在界面中直观的看到。
   + Eureka Client是一个Java客户端，用于简化Eureka Server的交互，客户端同时也具备一个内置的，使用轮询负载算法的负载均衡器。在应用启动后，将会向Eureka Server发送心跳（默认周期30秒）如果Eureka Server在多个心跳周期没有接收到某个节点的心跳，Eureka Server将会从服务注册表中把这个服务节点移除掉（默认周期为90秒）
-  
+
 + 三大角色
+  
   + Eureka Server：提供服务的注册与发现
   + Service Provider：将自身服务注册到Eureka中，从而使消费方能够找到
   + Service Consumer：服务消费方从Eureka中回去注册服务列表，从而找到消费服务。
@@ -248,7 +249,7 @@ public class EurekaServer7001 {
 
 测试结果
 
-<img src="SpringCloud.assets/image-20210615112222173.png" alt="image-20210615112222173" style="zoom:80%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/62824514703b5.png" alt="1652704529984.png" style="zoom:80%;" />
 
 #### Service Provider
 
@@ -367,8 +368,6 @@ eureka:
       defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
 ```
 
-
-
 ```yaml
 server:
   port: 7002
@@ -382,8 +381,6 @@ eureka:
     service-url: # 监控页面
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7003.com:7003/eureka/
 ```
-
-
 
 ```yaml
 server:
@@ -431,7 +428,7 @@ eureka:
 #### 回顾CAP原则
 
 RDBMS (Mysql. Oracle、 sqlServer) =\=\=>ACID
-		NoSQL (redis、 mongdb) =\=\=> CAP
+        NoSQL (redis、 mongdb) =\=\=> CAP
 
 #### ACID是什么?
 
@@ -702,8 +699,6 @@ Hystrix是一个用于处理分布式系统的延迟和容错的开源库，在�
 
 [官网Wiki](https://github.com/Netflix/Hystrix/wiki)
 
-
-
 ### 服务熔断
 
 **是什么？**
@@ -713,8 +708,6 @@ Hystrix是一个用于处理分布式系统的延迟和容错的开源库，在�
 当删除链路的某个微服务不可用或者响应时间太长时，会进行服务的降级，= =进而熔断该节点微服务的调用，快速返回错误的响应信息==。当检测到该节点微服务调用响应正常后恢复调用链路。在SpringCloud框架里熔断机制通过Hystrix实现。Hystrix会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失
 败就会启动熔断机制。熔断机制的注解 是@HystrixCommand.
 
-
-
-[^1]:简称LB:负载均衡
-[^2]:反向代理服务器
-[^3]:类似于以前Dao接口上标注Mapper注解，现在是一个微服务接口 上面标注一个Feign注解即可。
+[^1]: 简称LB:负载均衡
+反向代理服务器
+类似于以前Dao接口上标注Mapper注解，现在是一个微服务接口 上面标注一个Feign注解即可。

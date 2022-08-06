@@ -72,7 +72,7 @@
               <transactionManager type="JDBC"/>
               <dataSource type="POOLED">
                   <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                  <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+                  <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=true&useUnicode=true&characterEncoding=UTF-8"/>
                   <property name="username" value="root"/>
                   <property name="password" value="123456"/>
               </dataSource>
@@ -85,7 +85,7 @@
   ```
 
 + 编写Mybatis工具类
-
+  
   ```java
   //sqlSessionFactory
   public class mybatisUtils {
@@ -111,14 +111,12 @@
   }
   ```
 
-  
-
 ## 编写代码
 
 + 实体类
 
 + dao接口
-
+  
   ```java
   public interface UserDao {
       List<User> getUserList();
@@ -126,7 +124,7 @@
   ```
 
 + 接口实现类
-
+  
   ```xml
   <?xml version="1.0" encoding="UTF-8" ?>
   <!DOCTYPE mapper
@@ -140,7 +138,7 @@
   ```
 
 + Junit测试
-
+  
   ```java
       @Test
       public void test(){
@@ -153,17 +151,16 @@
           sqlSession.close();
       }
   ```
-
+  
    可能问题：
-
+  
   1. 配置文件未注册
   2. 绑定接口错误
   3. 方法名错误
   4. 返回类型错误
   5. Maven导出资源问题
-#  CRUD
-
-  
+     
+     # CRUD
 
 ## namespace
 
@@ -176,18 +173,15 @@ namespace中的包名要和Dao/Mappper接口的包名一致
 + id:对应的namespace中的方法名
 + resultType：SQL语句执行的返回值
 + parameterType：参数类型
-
-
-
 1. 编写接口
-
+   
    ```java
        //通过id查询用户
        User getUserById(int id);
    ```
 
 2. 编写对应的Mapper中的SQL语句
-
+   
    ```xml
        <select id="getUserById" parameterType="int" resultType="com.Volerde.pojo.User">
            select * from mybatis.user where id = #{id}
@@ -195,7 +189,7 @@ namespace中的包名要和Dao/Mappper接口的包名一致
    ```
 
 3. 测试
-
+   
    ```java
    @Test
    public void getUserById(){
@@ -210,21 +204,17 @@ namespace中的包名要和Dao/Mappper接口的包名一致
    }
    ```
 
-   
-
 ## Insert
 
 1. 编写接口
-
+   
    ```java
    //insert user
    int insertUser(User user);
    ```
 
-   
-
 2. 编写对应的Mapper中的SQL语句
-
+   
    ```xml
    <insert id="insertUser" parameterType="com.Volerde.pojo.User">
        insert into mybatis.user (id,name,password) values (#{id},#{name},#{password});
@@ -232,7 +222,7 @@ namespace中的包名要和Dao/Mappper接口的包名一致
    ```
 
 3. 测试
-
+   
    ```java
    //增删改需要提交事务
    @Test
@@ -248,21 +238,17 @@ namespace中的包名要和Dao/Mappper接口的包名一致
    }
    ```
 
-   
-
 ## update
 
 1. 编写接口
-
+   
    ```java
    //修改用户
    int updateUser(User user);
    ```
 
-   
-
 2. 编写对应的Mapper中的SQL语句
-
+   
    ```xml
    <update id="updateUser" parameterType="com.Volerde.pojo.User">
        update mybatis.user
@@ -272,7 +258,7 @@ namespace中的包名要和Dao/Mappper接口的包名一致
    ```
 
 3. 测试
-
+   
    ```java
    //增删改需要提交事务
    @Test
@@ -287,21 +273,17 @@ namespace中的包名要和Dao/Mappper接口的包名一致
    }
    ```
 
-   
-
 ## delete
 
 1. 编写接口
-
+   
    ```java
    //删除一个用户
    int deleteUser(int id);
    ```
 
-   
-
 2. 编写对应的Mapper中的SQL语句
-
+   
    ```xml
    <delete id="deleteUser" parameterType="int">
        delete from mybatis.user where id =#{id}
@@ -309,7 +291,7 @@ namespace中的包名要和Dao/Mappper接口的包名一致
    ```
 
 3. 测试
-
+   
    ```java
    //增删改需要提交事务
    @Test
@@ -392,7 +374,7 @@ password = 123456
 + 类型别名是为Java类型设置一个短的名字
 
 + 存在的意义在于减少类完全限定名的冗余
-
+  
   ```xml
   <!--    可以给实体类起别名-->
   <typeAliases>
@@ -401,17 +383,17 @@ password = 123456
   ```
 
 + 也可以指定一个包名，Mybatis会在包名下面搜索需要的Java Bean，比如：扫描实体类的包，它的默认别名就为这个类的类名 的首字母小写
-
+  
   ```xml
   <typeAliases>
       <package name="com.Volerde.pojo"/>
   </typeAliases>
   ```
-
+  
   实体类少，第一种方式
-
+  
   实体类多，第二种方式
-
+  
   ```java
   //方式二之注解版，
   @Alias("whatever")
@@ -494,7 +476,7 @@ MapperRegistry:注册绑定Mapper文件;
 + SqlSession 的实例不是线程安全的，因此是不能被共享的，所以它的最佳的作用域是请求或方法作用域。
 + 用完后需要赶紧关闭，否则资源被占用
 
-<img src="Mybatis.assets/image-20210419162213568.png" alt="image-20210419162213568" style="zoom: 50%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/62823e38b3814.png" alt="image-20210419162213568.png" style="zoom: 50%;" />
 
 每一个Mapper都代表一个业务
 
@@ -504,13 +486,11 @@ MapperRegistry:注册绑定Mapper文件;
 
 数据库中的字段
 
-<img src="Mybatis.assets/image-20210419162355017.png" alt="image-20210419162355017" style="zoom:80%;" />![image-20210419164245178](Mybatis.assets/image-20210419164245178.png)
-
-<img src="Mybatis.assets/image-20210419162355017.png" alt="image-20210419162355017" style="zoom:80%;" />![image-20210419164245178](Mybatis.assets/image-20210419164245178.png)
+![image-20210419162355017.png](http://lsky.volerde.space/i/2022/05/16/62823e3a6c45a.png)![image-20210419164245178.png](http://lsky.volerde.space/i/2022/05/16/62823e382bcd2.png)
 
 测试出现的问题
 
-<img src="Mybatis.assets/image-20210419164322301.png" alt="image-20210419164322301" style="zoom:50%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/62823e397978c.png" alt="image-20210419164322301.png" style="zoom:80%;" />
 
 ```xml
 //select * from mybatis.user where id = #{id}
@@ -524,7 +504,7 @@ MapperRegistry:注册绑定Mapper文件;
 
 ```xml
 <select id="getUserById" resultType="com.VOlerde.pojo.user">
-	select id,name,pwd as password from mybatis.user where id = #{id}
+    select id,name,pwd as password from mybatis.user where id = #{id}
 </select>
 ```
 
@@ -533,14 +513,14 @@ resultMap
 结果集映射
 
 ```
-id		name		pwd
-id		name		password
+id        name        pwd
+id        name        password
 ```
 
 ```xml
 <!--结果集映射-->
 <resultMap id="UserMap" type="User">
-	<!--column数据库中的字段,property实体类中的属性-->
+    <!--column数据库中的字段,property实体类中的属性-->
     <result column="pwd" property="password"/>
 </resultMap>
 ```
@@ -558,7 +538,7 @@ id		name		password
 
 现在：日志工厂
 
-![image-20210419183159743](Mybatis.assets/image-20210419183159743.png)
+![image-20210419183159743.png](http://lsky.volerde.space/i/2022/05/16/62823e3a0e345.png)
 
 + SLF4J
 + LOG4J【掌握】
@@ -579,14 +559,16 @@ id		name		password
 什么是Log4j？
 
 + Log4j是[Apache](https://baike.baidu.com/item/Apache/8512995)的一个开源项目，通过使用Log4j，我们可以控制日志信息输送的目的地是[控制台](https://baike.baidu.com/item/控制台/2438626)、文件、[GUI](https://baike.baidu.com/item/GUI)组件
-+ 可以控制每一条日志的输出格式
-+ 通过定义每一条日志信息的级别，我们能够更加细致的控制日志的生成过程
-+ 通过一个配置文件来灵活地进行配置，而不需要修改应用的代码
 
++ 可以控制每一条日志的输出格式
+
++ 通过定义每一条日志信息的级别，我们能够更加细致的控制日志的生成过程
+
++ 通过一个配置文件来灵活地进行配置，而不需要修改应用的代码
 1. 先导入Log4j的包
 
 2. log4j.properties
-
+   
    ```properties
    #将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码
    log4j.rootLogger=DEBUG,console,file
@@ -615,7 +597,7 @@ id		name		password
    ```
 
 3. 配置log4j为日志的实现
-
+   
    ```xml
    <settings>
        <setting name="logImpl" value="LOG4J"/>
@@ -623,7 +605,7 @@ id		name		password
    ```
 
 4. log4j的使用，直接测试运行
-
+   
    ```
    D:\Java\jdk-15.0.1\bin\java.exe -ea -Didea.test.cyclic.buffer.size=1048576 -javaagent:C:\Users\123\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\211.6693.111\lib\idea_rt.jar=7846:C:\Users\123\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\211.6693.111\bin -Dfile.encoding=UTF-8 -classpath C:\Users\123\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\211.6693.111\lib\idea_rt.jar;C:\Users\123\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\211.6693.111\plugins\junit\lib\junit5-rt.jar;C:\Users\123\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\211.6693.111\plugins\junit\lib\junit-rt.jar;D:\Programming\Java_Programming\IDEA\Mybatis\Mybatis-03\target\test-classes;D:\Programming\Java_Programming\IDEA\Mybatis\Mybatis-03\target\classes;C:\Users\123\.m2\repository\mysql\mysql-connector-java\8.0.23\mysql-connector-java-8.0.23.jar;C:\Users\123\.m2\repository\com\google\protobuf\protobuf-java\3.11.4\protobuf-java-3.11.4.jar;C:\Users\123\.m2\repository\org\mybatis\mybatis\3.5.6\mybatis-3.5.6.jar;C:\Users\123\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\123\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\123\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar com.intellij.rt.junit.JUnitStarter -ideVersion5 -junit4 com.Volerde.dao.UserMapperTest,getUserById
    [org.apache.ibatis.logging.LogFactory]-Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
@@ -664,13 +646,13 @@ id		name		password
 1. 在要使用log4j的类中，导入包import org.apache.log4j.Logger;
 
 2. 日志对象，参数为当前类的class
-
+   
    ```java
    static Logger logger = Logger.getLogger(UserMapperTest.class);
    ```
 
 3. 日志级别
-
+   
    ```java
    @Test
    public void log4j(){
@@ -695,14 +677,14 @@ id		name		password
 使用Mybatis实现分页，核心SQL
 
 1. 接口
-
+   
    ```java
    //分页
    List<User> getUserLimit(Map<String,Integer> map);
    ```
 
 2. Mapper.xml
-
+   
    ```xml
    <select id="getUserLimit" resultType="user" parameterType="map">
        select * from mybatis.user limit #{startIndex},#{pageSize};
@@ -710,7 +692,7 @@ id		name		password
    ```
 
 3. 测试
-
+   
    ```java
    @Test
    public void getUserLimit(){
@@ -755,14 +737,14 @@ id		name		password
 ## 使用注解开发
 
 1. 注解在接口上实现
-
+   
    ```java
    @Select("select * from user")
    List<User> getUsers();
    ```
 
 2. 需要在核心文件中绑定接口
-
+   
    ```xml
    <mappers>
        <mapper class="com.Volerde.dao.UserMapper"/>
@@ -771,9 +753,6 @@ id		name		password
 
 3. 测试
 
-
-
 本质：反射机制实现
 
 底层：动态代理
-

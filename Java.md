@@ -8,8 +8,6 @@
 //单行注释以双斜杠开头
 ```
 
-
-
 > ##### 多行注释
 
 多行注释
@@ -23,8 +21,6 @@
 
 */
 ```
-
-
 
 > ##### JavaDoc注释
 
@@ -58,19 +54,17 @@ javadoc命令是用来生成自己API文档的
 
 > ##### 关键字
 
-|  abstract  | assert       | boolean   | break      | byte   |
-| :--------: | ------------ | --------- | ---------- | ------ |
-|    case    | catch        | char      | class      | const  |
-|  continue  | default      | do        | double     | else   |
-|    enum    | extends      | final     | finally    | float  |
-|    for     | goto         | if        | implements | import |
+| abstract   | assert       | boolean   | break      | byte   |
+|:----------:| ------------ | --------- | ---------- | ------ |
+| case       | catch        | char      | class      | const  |
+| continue   | default      | do        | double     | else   |
+| enum       | extends      | final     | finally    | float  |
+| for        | goto         | if        | implements | import |
 | instanceof | int          | interface | long       | native |
-|    new     | package      | private   | protected  | public |
-|   return   | strictfp     | short     | static     | super  |
-|   switch   | synchronized | this      | throw      | throws |
+| new        | package      | private   | protected  | public |
+| return     | strictfp     | short     | static     | super  |
+| switch     | synchronized | this      | throw      | throws |
 | transient  | try          | void      | volatile   | while  |
-
-
 
 > ##### 标识符
 
@@ -108,10 +102,10 @@ javadoc命令是用来生成自己API文档的
 
 ### 类型转换
 
-<img src="Java.assets/image-20210319201459877.png" alt="image-20210319201459877" style="zoom: 80%;" />
+![image-20210319201459877.png](http://lsky.volerde.space/i/2022/05/16/62823afa0515d.png)
 
-+ 强制类型转换		**(类型)变量名**		**高—–低**
-+ 自动类型转换       **低—–高**	
++ 强制类型转换        **(类型)变量名**        **高—–低**
++ 自动类型转换       **低—–高**    
 
 ### 变量、常量、作用域
 
@@ -119,11 +113,9 @@ javadoc命令是用来生成自己API文档的
 
 Java变量是程序中最基本的存储单元，其要素包括变量名，变量类型和**作用域**
 
-
-
 ```java
 type vrName [=value] [{,varName[=value]}];
-//数据类型	变量名 = 值;
+//数据类型    变量名 = 值;
 ```
 
 > ##### 变量作用域
@@ -132,19 +124,17 @@ type vrName [=value] [{,varName[=value]}];
 + 实例变量
 + 局部变量
 
-```java 
-public class Variable{//	类
-    static int allclicks = 0;	//	类变量，前面加了关键词static
-    String str = "Hello,World!";	//	实例变量，前面无关键词，如果不初始化，则会变成该类型的默认值 0 0.0
-    								//	布尔值默认为:false	除了基本类型，其余默认值都是null
-    
-    public void method{//	method方法
-        int i = 1;	//	局部变量，定义在方法里面
+```java
+public class Variable{//    类
+    static int allclicks = 0;    //    类变量，前面加了关键词static
+    String str = "Hello,World!";    //    实例变量，前面无关键词，如果不初始化，则会变成该类型的默认值 0 0.0
+                                    //    布尔值默认为:false    除了基本类型，其余默认值都是null
+
+    public void method{//    method方法
+        int i = 1;    //    局部变量，定义在方法里面
     }
 }
 ```
-
-
 
 **注意事项:**
 
@@ -154,12 +144,12 @@ public class Variable{//	类
 
 **变量命名规范:**
 
-+ 所有变量，方法，类名:	**见名知意**
-+ 类成员变量:	首字母小写和驼峰原则:	monthSalary
-+ 局部变量:	首字母小写和驼峰原则
-+ 常量:	大写字母和下划线:	MAX_VALUE
-+ 类名:	首字母大写和驼峰原则:	Man,GoodMan
-+ 方法名:	首字母小写和驼峰原则:	run(),runRun()
++ 所有变量，方法，类名:    **见名知意**
++ 类成员变量:    首字母小写和驼峰原则:    monthSalary
++ 局部变量:    首字母小写和驼峰原则
++ 常量:    大写字母和下划线:    MAX_VALUE
++ 类名:    首字母大写和驼峰原则:    Man,GoodMan
++ 方法名:    首字母小写和驼峰原则:    run(),runRun()
 
 > ##### 常量
 
@@ -170,12 +160,12 @@ public class Variable{//	类
 ```java
 //final 常量名 = 值;
 final double PI = 3.14;
-public static final double PI = 3.14;	//	public,static,final为修饰符，可调换顺序，不区分前后
+public static final double PI = 3.14;    //    public,static,final为修饰符，可调换顺序，不区分前后
 ```
 
 ### 基本运算符
 
-+ 算术运算符:	+，-，*，/，%，++，--
++ 算术运算符:    +，-，*，/，%，++，--
 + 赋值运算符    =
 + 关系运算符:    >，<，>=，<=，==，!=
 + 逻辑运算符:    &&，||，!
@@ -184,16 +174,16 @@ public static final double PI = 3.14;	//	public,static,final为修饰符，可�
 + 扩展赋值运算符:    +=，-=，*=，/=
 
 ```java
-//++与--	自增与自减运算符
+//++与--    自增与自减运算符
 int a = 3;
 int b = a++;//a++,先给b赋值，再进行自增
 int c = ++a;//++a，先自增，再给c赋值
 ```
 
 ```java
-&&	//逻辑与运算：两个结果都为真，结果才为true
-||	//逻辑或运算：两个结果有一个为真，结果就为true
-!	//逻辑非运算：如果是真，则变为假，如果是假，则变为真、
+&&    //逻辑与运算：两个结果都为真，结果才为true
+||    //逻辑或运算：两个结果有一个为真，结果就为true
+!    //逻辑非运算：如果是真，则变为假，如果是假，则变为真、
     //逻辑运算中存在短路运算
 ```
 
@@ -207,13 +197,13 @@ A|B = 0011 1101
 A^B = 0011 0001
 ~B  = 1111 0010
 --------------------
-<<	*2
->>	/2
+<<    *2
+>>    /2
 */
 ```
 
 ```java
-//字符串连接符	+
+//字符串连接符    +
 int a = 10;
 int b = 20;
 System.out.println(""+a+b);//结果为1020，a,b被转换为了string类型
@@ -221,8 +211,8 @@ System.out.println(a+b+"");//结果为30
 ```
 
 ```java
-?  :	//条件运算符
-x?y:z	//如果x为true，结果为y，否则为z
+?  :    //条件运算符
+x?y:z    //如果x为true，结果为y，否则为z
 ```
 
 注：
@@ -234,7 +224,7 @@ x?y:z	//如果x为true，结果为y，否则为z
 + 语法格式：
 
 ```java
-package	pkg1[. pkg2[. pkg3...]]
+package    pkg1[. pkg2[. pkg3...]]
 ```
 
 + **一般利用公司域名倒置作为包名**
@@ -257,8 +247,6 @@ import package1[.package2...].(classname|*);
   + 只有输入有效字符后才将后面输入的空白作为分隔服或者结束符
   + next()不能得到带有空格的字符串
 
-
-
 + nextline():
   + 以Enter为结束符，也就是说 nextline()方法返回的是输入回车之前的所有字符
   + 可以获得空白
@@ -272,10 +260,10 @@ import package1[.package2...].(classname|*);
 > ##### 选择结构
 
 + if单选泽结构
-
+  
   ```java
   if(布尔表达式){
-  	//如果布尔表达式的值为true
+      //如果布尔表达式的值为true
   }else{
       //如果布尔表达式的值为false
   }
@@ -288,12 +276,12 @@ import package1[.package2...].(classname|*);
 + 嵌套的if结构
 
 + switch多选择结构
-
+  
   + switch语句中的变量类型可以是：
     + byte、short、int或者char
     + ==从Java SE 7开始，switch支持字符串String类型了==
     + case标签必须为字符串常量或字面量
-
+  
   ```java
   switch(expression){
       case value :
@@ -310,51 +298,51 @@ import package1[.package2...].(classname|*);
 > ##### 循环结构
 
 + while循环
-
+  
   ```java
   while(布尔表达式){
-  	//循环内容
+      //循环内容
   }
   ```
 
 + do...while循环
-
+  
   ```java
   do{
       //代码语句
   }while(布尔表达式);
   ```
-
+  
   + while和do-while区别：
     + while先判断后执行。du-while是后判断先执行
     + do-while总能保证循环体会被至少执行一次！这是他们的主要差别。
 
 + for循环
-
+  
   ```java
   for(初始化;布尔表达式;更新){
-  	//代码语句
+      //代码语句
   }
   ```
 
 + 在Java5中引入了一种主要用于数组的增强型for循环。
-
+  
   ```java
   for(声明语句 : 表达式){
-  	//代码语句
+      //代码语句
   }
   ```
-
+  
   + 声明语句：声明新的局部变量，该变量的类型必须和数组元素的类型匹配。其作用域限定在循环语句块，其值与此时数组元素的值相等。
   + 表达式：表达式是要访问的数组名，或者是返回值为数组的方法。 
 
->  ##### print&println的区别
+> ##### print&println的区别
 
 ```java
-print	//输出完不会换行
-println	//输出完会换行    
-    \t	//输出tab键
-    \n	//输出换行符
+print    //输出完不会换行
+println    //输出完会换行    
+    \t    //输出tab键
+    \n    //输出换行符
 ```
 
 > ##### break&continue
@@ -364,25 +352,25 @@ println	//输出完会换行
 + continue语句用在~~徐怒汉语句体~~中，用于终止某次循环过程，即跳过循环体中尚未执行的语句，接着进行下一次是否执行循环的判定。
 
 + 关于goto关键字 
-
+  
   + goto关键字很早就在程序设计语言中出现。尽管goto仍是Java的一个保留字，但并未在语言中正式使用；==Java没有goto==。然而，在break和continue这两个关键字上，我们仍能看出一些goto的影子——带标签的break和continue。
-
+  
   + “标签”是指后面跟一个冒号的标识符，例如：label:
-
+  
   + 对Java来说唯一用到标签的地方是在循环语句之前。而在循环之前设置标签的唯一理由是：我们希望在其中嵌套另一个循环，由于break和continue关键字通常只中断当前循环，但若随同标签
-
+    
     使用，他们就会中断到存在标签的地方。
 
 # 方法
 
-###  何谓方法
+### 何谓方法
 
 + Java方法是语句的集合，他们在一起执行一个功能。
   + 方法是解决一类问题的步骤的有序组合
   + 方法包含于类或对象中
   + 方法在程序中被创建，在其他地方被引用
 + 设计方法的原则：方法的本意是功能块，就是实现某个功能的语句块的集合。我们设计方法的时候，最好保持方法的原子性，==就是一个方法只完成一个功能，这样利于我们后期的拓展==
-+ 方法的命名规则：首字母小写和驼峰原则:	run(),runRun()
++ 方法的命名规则：首字母小写和驼峰原则:    run(),runRun()
 
 ### 方法的定义及调用
 
@@ -391,7 +379,7 @@ println	//输出完会换行
 + Java的方法类似于其他语言的函数，是一段==用来完成特定功能的代码片段==，一般情况下，定义一个方法包括一下语法：
 
 + ==方法包含一个方法头和一个方法体。==下面是一个方法的所有部分：
-
+  
   + ==修饰符==：修饰符，这是可选的，告诉编译器如何调用该方法。定义了该方法的访问类型。
   + ==返回值类型==：方法可能会返回值。returnValueType是方法返回值得数据类型。有些方法执行所需的操作，没有返回值。在这种情况下，returnValueType是关键字void
   + ==方法名==:是方法的实际名称。方法名和参数表共同构成方法签名。
@@ -399,11 +387,11 @@ println	//输出完会换行
     + 形式参数：在方法被调用是用于接收外界输入的参数。
     + 实参：调用方法时实际传给方法的数据。
   + ==方法体==：方法体包括具体的语句，定义该方法的功能。
-
+  
   ```java
   修饰符 返回值类型 方法名（参数类型 参数名）}
-  	···
-  	方法体
+      ···
+      方法体
       ···
       return 返回值；
   }
@@ -416,20 +404,18 @@ println	//输出完会换行
 + **Java支持两种调用方法的方式，根据方法是否返回值来选择。**
 
 + **当方法返回一个值的时候，方法调用通常被当作一个值。例如：**
-
+  
   ```java
   int larger = max(30,40);
   ```
 
 + **如果方法返回值是void，方法调用一定是一条语句。**
-
-  ````java
+  
+  ```java
   System.out.println("Hello");
-  ````
+  ```
 
 + **值传递 和 引用传递**
-
-
 
 ### 方法重载
 
@@ -445,7 +431,7 @@ println	//输出完会换行
 ### 命令行传参
 
 + 有时候你希望运行一个程序的时候再传递给它消息。只要靠命令行传参数给main()函数实现。
-
+  
   ```java
   public class CommandLine{
       public static void main(string args[]){
@@ -463,16 +449,16 @@ println	//输出完会换行
 + 在方发声明中，在指定参数类型后加一个省略号（...）
 
 + 一个方法中只能指定一个可变参数，它必须是方法的最后一个参数。任何普通的参数必须在它之前声明
-
+  
   ```java
   public static void printMax(double... numbers){
       if (numbers.length==0){
           System.out.println("No argument passed");
           return;
       }
-      
+  
       double result = numbers[0];
-      
+  
       //排序
       for (int i =1;i<numbers.length;i++){
           if (numbers[i]>result){
@@ -491,9 +477,7 @@ println	//输出完会换行
   + 递归头：什么时候不调用自身方法。如果没有头，将陷入死循环。
   + 递归体： 什么时候需要调用自身方法。
 
-
-
-# 数组 
+# 数组
 
 ### 数组概述
 
@@ -504,14 +488,14 @@ println	//输出完会换行
 ### 数组声明创建
 
 + 首先必须声明数组变量，才能在程序中使用数组。
-
+  
   ```java
-  dataType[] arrayRefVar;	//首选方法
-  dataType arrayRefVar[];	//效果相同，但不是首选方法
+  dataType[] arrayRefVar;    //首选方法
+  dataType arrayRefVar[];    //效果相同，但不是首选方法
   ```
 
 + Java语言使用new操作符来创建数组
-
+  
   ```java
   dataType[] arrayRefVar = new dataType[arraySize];
   ```
@@ -519,7 +503,7 @@ println	//输出完会换行
 + 数组的元素是通过索引访问的，数组索引从0开始
 
 + 获取数组长度
-
+  
   ```java
   arrays.length
   ```
@@ -542,14 +526,14 @@ println	//输出完会换行
 > ##### 三种初始化
 
 + 静态初始化
-
+  
   ```java
   int[] a ={1,2,3};
   Man[] men ={new Man(1,1),new Man(2,2)};
   ```
 
 + 动态初始化
-
+  
   ```java
   int[] a =new int[2];
   a[0] = 1;
@@ -557,7 +541,7 @@ println	//输出完会换行
   ```
 
 + 数组的默认初始化
-
+  
   + 数组是引用类型，它的元素相当于类的实例变量，因此数组一经分配空间，其中的每个元素也被按照实例变量同样的方式被隐式初始化。
 
 > ##### 数组的四个基本特点
@@ -570,18 +554,18 @@ println	//输出完会换行
 > ##### 数组边界
 
 + 下标的合法区间：[0，length-1]，如果越界就会报错
-
+  
   ```java
   public static void main(String[] args) {
-  	int[] a=new int[2];
-  	System.out.println(a[2]);
+      int[] a=new int[2];
+      System.out.println(a[2]);
   }
   ```
 
 + ==ArrayIndexOutOfBoundsException:数组下标越界异常！==
 
 + 小结：
-
+  
   + 数组是相同数据类型（数据类型可以为任意类型）的有序集合
   + 数组也是对象。数组元素相当于对象的成员变量
   + 数组长度是确定的，不可变的。如果越界，就会报错。
@@ -598,7 +582,7 @@ println	//输出完会换行
 + 多维数组可以看成是数组的数组，比如二维数组就是一个特殊的一维数组，其每一个元素都是一个一维数组
 
 + 二维数组
-
+  
   ```java
   int a[][] = new int[2][5];//一个2行5列的数组
   ```
@@ -620,7 +604,7 @@ println	//输出完会换行
 + 两层循环，外层冒泡轮数，内层依次比较
 
 + 算法的时间复杂度为O(n2)
-
+  
   ```java
   public static int[] sort(int[] array){//冒泡排序
       //临时变量
@@ -650,7 +634,7 @@ println	//输出完会换行
   + 把具有不同值的元素和行列及值记录在一个小规模的数组中，从而缩小程序的规模
 + 如图：左边为原始数据，右边是稀疏数组
 
-<img src="Java.assets/image-20210329140656818.png" alt="image-20210329140656818" style="zoom: 67%;" />      <img src="Java.assets/image-20210329140710666.png" alt="image-20210329140710666" style="zoom: 67%;" />
+![image-20210329140656818.png](http://lsky.volerde.space/i/2022/05/16/62823afc7e2ac.png)      ![image-20210329140710666.png](http://lsky.volerde.space/i/2022/05/16/62823afcc62d8.png)
 
 # 面向对象
 
@@ -729,41 +713,38 @@ println	//输出完会换行
 + 继承关系的两个类，一个为子类（派生类），一个为父类（基类）。子类继承父类，使用关键词extends来表示
 + 子类和父类之间，从意义上讲应该具有“is a”的关系
 
-
-
 + object类
 
 + super
-
+  
   ```markdown
   super注意点：
-  	1、super调用父类的构造方法，必须在构造方法的第一个
-  	2、super必须只能出现在子类的方法或者构造方法中
-  	3、super和this不能同时调用构造方法
+      1、super调用父类的构造方法，必须在构造方法的第一个
+      2、super必须只能出现在子类的方法或者构造方法中
+      3、super和this不能同时调用构造方法
   VS this：
-  	代表的对象不同：
-  		this：本身调用着这个对象
-  		super： 代表父类对象的应用
-  	前提：
-  		this：没有继承也可以使用
-  		super： 只有在继承条件下才可以使用
-  	构造方法：
-  		this（）：本类的构造
-  		super（）：父类的构造
-  		
+      代表的对象不同：
+          this：本身调用着这个对象
+          super： 代表父类对象的应用
+      前提：
+          this：没有继承也可以使用
+          super： 只有在继承条件下才可以使用
+      构造方法：
+          this（）：本类的构造
+          super（）：父类的构造
   ```
 
 + 方法重写
-
+  
   ```markdown
   重写：必须有继承关系，子类重写父类的方法
-  	1、方法名必须相同
-  	2、参数列表必须相同
-  	3、修饰符：范围可以扩大但不能缩小：	public>Protected>Default>private
-  	4、抛出异常：范围，可以被缩小，但不能扩大：	ClassNotFoundException-->Exception（大）
+      1、方法名必须相同
+      2、参数列表必须相同
+      3、修饰符：范围可以扩大但不能缩小：    public>Protected>Default>private
+      4、抛出异常：范围，可以被缩小，但不能扩大：    ClassNotFoundException-->Exception（大）
   重写，子类的方法和父亲必要一致；方法体不同
   为什么需要重写：
-  	1、父类的功能子类不一定需要，或者不一定不满足
+      1、父类的功能子类不一定需要，或者不一定不满足
   Alt + Insert：Override
   ```
 
@@ -774,16 +755,17 @@ println	//输出完会换行
 + 一个对象的实际类型是确定的，但可以指向对象的引用的类型有很多
 
 + 多态存在的条件
+  
   + 有继承关系
   + 子类重写父类方法
   + 父类引用指向子类对象
-  
+
 + 注意：多态是方法的多态，属性没有多态性
 
 + instanceof
-
+  
   ```markdown
-  类型转换异常！	ClassCastException!
+  类型转换异常！    ClassCastException!
   ```
 
 ### 抽象类和接口
@@ -814,7 +796,6 @@ println	//输出完会换行
 > 内部类
 
 + 内部类就是在一个类的内部定义一个类，比如，A类中定义了一个B类，那么B类相对A类来说就称为内部类，而A类相对B类来说就是外部类了。
-
 1. 成员内部类
 2. 静态内部类
 3. 局部内部类
@@ -835,45 +816,25 @@ println	//输出完会换行
 
 ### Java异常处理机制
 
-
-
 ### 处理异常
-
-
 
 ### 自定义异常
 
-
-
 ### 总结
-
-
 
 # 多线程
 
 线程简介
 
-
-
 线程实现
-
-
 
 线程状态
 
-
-
 线程同步
-
-
 
 线程通信问题
 
-
-
 高级主题
-
-
 
 # 注解
 
@@ -904,6 +865,7 @@ println	//输出完会换行
 + 元注解的作用就是负责注解其他注解,java定义了4个标准的meta-annotation类型,他们被用来通过对其他annotation类型作说明.
 
 + 这些类型和他们所支持的类在java.lang.annotation包中找到(@Target,@Retention,@Documented,@Inherited)
+  
   + @Target:用于描述注解的使用范围(即:被描述的注解可以用在什么地方)
   + @Retention:表示需要在什么级别保存该注释信息,用于描述注解的生命周期
     + (SOURCE<CLASS<RUNTIME)
@@ -925,15 +887,15 @@ println	//输出完会换行
 
 ## java反射机制概述
 
-> ###  java Reflection
+> ### java Reflection
 
 + Reflection(反射)是java被视为动态语言的关键,反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息,并能直接操作任意对象的内部属性及方法.
-
+  
   `Class c = Class.forName("java.lang.String")`
 
 + 加载完类后,在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象就包含了完整的类的结构信息.我们可以通过这个对象看到类的结构.
-
-  <img src="Java.assets/image-20210412152820115.png" alt="image-20210412152820115" style="zoom:80%;" />
+  
+  ![image-20210412152820115.png](http://lsky.volerde.space/i/2022/05/16/62823afdab38c.png)
 
 > ### Java反射机制研究及应用
 
@@ -948,8 +910,6 @@ Java反射机制提供的功能
 + 生成动态代理
 + ......
 
-
-
 ## 理解Class类并获取Class实例
 
 > ### Class类
@@ -963,32 +923,32 @@ Java反射机制提供的功能
 + 通过Class可以完整地得到一个类中的所有被加载的结构
 + Class类是Reflection的根源,针对任何你想动态加载,运行的类,唯有先获得相应的Class对象
 
-> ###  Class类的常用方法
+> ### Class类的常用方法
 
-| 方法名                                       | 功能说明                                                |
-| -------------------------------------------- | ------------------------------------------------------- |
-| static ClassforName(String name)             | 返回指定类名name的Class对象                             |
-| Object newInstance()                         | 调用缺省构造函数,返回Class对象的一个实例                |
+| 方法名                                          | 功能说明                               |
+| -------------------------------------------- | ---------------------------------- |
+| static ClassforName(String name)             | 返回指定类名name的Class对象                 |
+| Object newInstance()                         | 调用缺省构造函数,返回Class对象的一个实例            |
 | getName                                      | 返回此Class对象所表示的实体(类,接口,数组类或void)的名称 |
-| Class getSuperClass()                        | 返回当前Class对象的父类的Class对象                      |
-| Class[] getinterfaces()                      | 获取当前Class对象的接口                                 |
-| Constructor[] getConstructors()              | 返回一个包含某些Constructor对象的数组                   |
-| ClassLoader getClassLoader()                 | 返回该类的类加载器                                      |
-| Method getMethod(String name,Class....    T) | 返回一个Method对象,此对象的形参类型为param Type         |
-| Field[] getDeclaredFields()                  | 返回Field对象的一个数组                                 |
+| Class getSuperClass()                        | 返回当前Class对象的父类的Class对象             |
+| Class[] getinterfaces()                      | 获取当前Class对象的接口                     |
+| Constructor[] getConstructors()              | 返回一个包含某些Constructor对象的数组           |
+| ClassLoader getClassLoader()                 | 返回该类的类加载器                          |
+| Method getMethod(String name,Class....    T) | 返回一个Method对象,此对象的形参类型为param Type   |
+| Field[] getDeclaredFields()                  | 返回Field对象的一个数组                     |
 
 > ### 获取Class类的实例
 
 1. 若已知具体的类,通过类的class属性获取,该方法最为安全可靠,程序性能最高
-
+   
    `Class clazz = Person.class;`
 
 2. 已知某个类的实例,调用该实例的getClass()方法获取Class对象
-
+   
    `Class clazz = person.getClass();`
 
 3. 一直一个类的全类名,且该类在类路径下,可通过Class类的静态方法forName()获取,可能抛出ClassNotFoundException
-
+   
    `Class clazz = Class.forName("demo01.Student");`
 
 4. 内置基本数据类型可以直接用类名.Type
@@ -1024,7 +984,7 @@ Java反射机制提供的功能
 
 当程序主动使用某个类时,如果该类还未被加载到内存中,则系统会通过如下三个步骤对该类进行初始化
 
-<img src="Java.assets/image-20210412170941253.png" alt="image-20210412170941253" style="zoom:80%;" />
+![image-20210412170941253.png](http://lsky.volerde.space/i/2022/05/16/62823afe0f917.png)
 
 > ### 类的加载与ClassLoader的理解
 
@@ -1056,8 +1016,8 @@ Java反射机制提供的功能
 + 类加载的作用：将class文件字节码内容加载到内存中，并将这些静态数据转换成方法区的运行时数据结构，然后在堆中生成一个代表这个类的java.lang.Class对象，作为方法区中类数据的访问入口。
 
 + 类缓存：标准的JavaSE类加载器可以按要求查找类，但一旦某个类被加载到类加载器中，它将维持加载（缓存）一段时间.不过JVM垃圾回收机制可以回收这些Class对象.
-
-  <img src="Java.assets/image-20210412191422878.png" alt="image-20210412191422878" style="zoom:80%;" />
+  
+  ![image-20210412191422878.png](http://lsky.volerde.space/i/2022/05/16/62823afe54d6c.png)
 
 ## 获取运行时类的完整结构
 
@@ -1082,8 +1042,8 @@ Field,Method,Constructor,Superclass,Interface,annotation
 1. 通过Class类的getMethod(String name,Class...parameterTypes)方法取得一个Method对象,并设置测方法操作时所需要的参数类型
 
 2. 使用object invoke(Object obj,Object[] args)进行调用,并向方法中传递要设置的obj对象的参数信息
-
-   <img src="Java.assets/image-20210413111305364.png" alt="image-20210413111305364" style="zoom:80%;" />
+   
+   ![image-20210413111305364.png](http://lsky.volerde.space/i/2022/05/16/62823afeccd29.png)
 
 ==Object invoke(Object obj,Object...args)==
 
@@ -1133,4 +1093,3 @@ public static void main(String[] args) throws ClassNotFoundException, Instantiat
     System.out.println(user.getName());
 }
 ```
-

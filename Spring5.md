@@ -267,7 +267,7 @@ p命名空间和c命名空间不能直接使用，需要先导入xml约束
 
 ## Bean的作用域
 
-<img src="Spring5.assets/image-20210403152403434.png" alt="image-20210403152403434" style="zoom:80%;" />
+![1652704240627.png](http://lsky.volerde.space/i/2022/05/16/628243f3004d4.png)
 
 + 单例模式（Spring默认机制）
 
@@ -532,7 +532,7 @@ public class MyTest {
 + 动态代理
 + 静态代理
 
-<img src="Spring5.assets/image-20210403193942901.png" alt="image-20210403193942901" style="zoom:80%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/628243f339d47.png" alt="1652704240628.png" style="zoom:80%;" />
 
 ## 静态代理
 
@@ -624,7 +624,7 @@ public class MyTest {
 
 聊聊AOP
 
-<img src="Spring5.assets/image-20210403204031163.png" alt="image-20210403204031163" style="zoom:80%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/628243f359f36.png" alt="1652704240628.png" style="zoom:80%;" />
 
 
 
@@ -654,7 +654,7 @@ public class MyTest {
 
 AOP（aspect oriented programming）意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术方式。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。
 
-<img src="Spring5.assets/image-20210421123510278.png" alt="image-20210421123510278" style="zoom:80%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/628243f378d6a.png" alt="1652704240628.png" style="zoom:80%;" />
 
 ## AOP在Spring中的作用
 
@@ -668,11 +668,11 @@ AOP（aspect oriented programming）意为：面向切面编程，通过预编�
 + 切入点（PointCut)：切面通知执行的“地点”的定义
 + 连接点（JoinPoint）：与切入点匹配的执行点
 
-<img src="Spring5.assets/image-20210421124317427.png" alt="image-20210421124317427" style="zoom:80%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/628243f360403.png" alt="1652704240629.png" style="zoom:80%;" />
 
 SpringAOP中，通过Advice定义横切逻辑，Spring中支持5种类型的Advice：
 
-<img src="Spring5.assets/image-20210421172045276.png" alt="image-20210421172045276" style="zoom:80%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/628243f3b8f40.png" alt="1652704240629.png" style="zoom:80%;" />
 
 即AOP在不改变原有代码的情况下，增加了新的功能。
 
@@ -813,7 +813,7 @@ SpringAOP中，通过Advice定义横切逻辑，Spring中支持5种类型的Advi
 
 ## Mybatis-Spring
 
-<img src="Spring5.assets/image-20210423181307298.png" alt="image-20210423181307298" style="zoom:80%;" />
+![1652704240629.png](http://lsky.volerde.space/i/2022/05/16/628243f3ceb9c.png)
 
 有问题，暂时搁置
 

@@ -220,7 +220,7 @@ console.log(person)何为数据代理
 
    在getter/setter内部去操作data中对应的属性
 
-<img src="Vue.assets/image-20220216231402254.png" alt="image-20220216231402254" style="zoom:80%;" />
+![1652706136854.png](http://lsky.volerde.space/i/2022/05/16/62824b5a3563d.png)
 
 ## 基础语法
 
@@ -911,7 +911,7 @@ app.mount("#app")
 
 组件是可复用的vue实例，就是一组可以重复使用的模板，和JSTL的自定义标签、Thymeleaf的`th:fragment`等框架有异曲同工之妙。通常，一个应用会以一棵嵌套的组件树的形式来组织
 
-<img src="Vue.assets/15eb7ca226e9475d084fbfe247059698_components.png" alt="15eb7ca226e9475d084fbfe247059698_components" style="zoom: 67%;" />
+![1652706136853.png](http://lsky.volerde.space/i/2022/05/16/62824b59388d9.png)
 
 组件编写：
 
@@ -1522,7 +1522,7 @@ Vue实例有一个完整的生命周期，也就是从开始创建、初始化�
 
 在Vue的生命周期内，它提供了一些列的事件，可以让我们在事件触发时创建JS方法，可以让我们创建的JS控制整个大局，让这些方法响应中的this指向的是Vue的实例。
 
-<img src="Vue.assets/lifecycle.png" alt="lifecycle"  />
+![1652706136855.png](http://lsky.volerde.space/i/2022/05/16/62824b5a22103.png)
 
 ```html
 <body>

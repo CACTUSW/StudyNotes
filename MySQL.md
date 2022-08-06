@@ -10,11 +10,11 @@ flush privileges;	--刷新权限
 
 ------------------------------
 --所有的语句用;结尾
-shou databases;	--查看所有数据库
+show databases;	--查看所有数据库
 use school;	--切换到school数据库
 
 show tables;	--查看数据库中的所有表
-describe（desc） student;	--娴熟数据库中所有的表的信息
+describe（desc） student;	--删除数据库中所有的表的信息
 
 create database xxx;	--创建数据库
 
@@ -231,7 +231,7 @@ drop table [if exists] xxx;
 
 # MySQL数据管理
 
-## 外键（了解）
+## 外键
 
 > 方式一、在创建表的时候，增加约束
 
@@ -1091,7 +1091,7 @@ MySQL数据库备份方式
 
 > SQLyog可视化管理
 
-<img src="MySQL.assets/image-20210410161435097.png" alt="image-20210410161435097" style="zoom:80%;" />
+<img src="http://lsky.volerde.space/i/2022/05/16/628242d0b155c.png" alt="1652703950192.png" style="zoom:80%;" />
 
 > SQL命令操作
 

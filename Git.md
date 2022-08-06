@@ -58,9 +58,7 @@ git config --global user.email Volerde@outlook.com	#email
 
 Git本地有三个工作区域：工作目录(Working Directory)、暂存区(Repository或Git Directory).如果再加上远程的Git仓库(Remote Directory)就可以分为四个工作区域.文件在这四个区域之间的转换关系如下:
 
-<img src="Git.assets/image-20210605115541328.png" alt="image-20210605115541328" style="zoom:80%;" />
-
-+ Workspace：工作区，平时存放项目代码的地方
++ ![image-20210605115541328.png](http://lsky.volerde.space/i/2022/05/14/627f8adec865b.png)Workspace：工作区，平时存放项目代码的地方
 + index/Stage：暂存区，用于临时存放你的改动，事实上他只是一个文件，保存即将提交到文件列表信
 
 ### 当你创建一个新的仓库
