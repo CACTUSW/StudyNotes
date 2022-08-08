@@ -747,10 +747,396 @@ $\huge \underbrace {var}_{变量定义关键字}\underbrace{maximumAge}_{变量�
   val list = listOf("Volerde", "LunarDust", "Hanau")
   println(list.getOrElse(4) { "Unknown" })
   println(list.getOrNull(4))
-  println(list.getOrNull(4) ?: { "Unknown" })
+  println(list.getOrNull(4) ?: "Unknown" )
   ```
 
+
+**可变列表**
+
++ 在Kotlin中，支持内容修改的列表叫做可变列表，要创建可变列表，可以使用mutableListOf。List还支持使用toList和toMutableList函数动态实现只读列表和可变列表的相互转换。
+
+  ```kotlin
+  val mutableListOf = mutableListOf("Volerde", "volerde", "LunarDust")
+  mutableListOf.add("Hanau")
+  mutableListOf.remove("volerde")
+  //list与mutableList相互转换
+  listOf("Volerde","LunarDust").toMutableList()
+  mutableListOf.toList()
+  ```
+
+**mutator函数**
+
++ 能修改可变列表的函数有个统一的名字：mutator函数
+
++ 添加元素运算符与删除元素运算符
+
++ 基于lambda表达式指定的条件删除元素
+
+  ```kotlin
+  val mutableListOf = mutableListOf("Volerde", "volerde", "LunarDust")
+  mutableListOf += "Hanau"
+  mutableListOf -= "volerde"
+  mutableListOf.removeIf { it.contains("a") }
+  ```
+
+**集合遍历**
+
++ for in 遍历
+
++ forEach遍历
+
++ forEachIndexed遍历时获取索引
+
+  ```kotlin
+  for (s in list) {
+      println(s)
+  }
+  list.forEach {
+      println(it)
+  }
+  list.forEachIndexed { index: Int, s: String ->
+      println("$index, $s")
+  }
+  ```
+
+**解构**
+
++ 通过_符号过滤不想要的元素
+
+  ```kotlin
+  val list = listOf("Volerde", "volerde", "LunarDust")
+  val (origin:String,_:String,proxy:String) = list
+  ```
+
+**Set创建与元素获取**
+
++ 通过setOf创建set集合，使用elementAt函数读取集合中的元素
+
+  ```kotlin
+  val set = setOf("Volerde", "LunarDust", "Hanau")
+  // 无set[1]写法
+  set.elementAt(1)
+  ```
+
+**可变集合**
+
++ 通过mutableSetOf创建可变的set集合
+
+  ```kotlin
+  val mutableSet = mutableSetOf("Volerde", "LunarDust", "Hanau")
+  mutableSet += "Ceylon"
+  ```
+
+**集合转换**
+
++ 把List转换成Set，去掉重复元素
+
++ 快捷函数
+
+  ```kotlin
+  listOf("Volerde", "LunarDust", "Volerde", "Hanau")
+      .toSet()
+      .toList()
+  listOf("Volerde", "LunarDust", "Volerde", "Hanau").distinct()
+  ```
+
+**数组类型**
+
++ Kotlin提供了各种Array，虽然是引用类型，但是可以编译成Java的基本数据类型
+
+  | 数组类型     | 创建函数       |
+  | ------------ | -------------- |
+  | IntArray     | intArrayOf     |
+  | DoubleArray  | doubleArrayOf  |
+  | LongArray    | longArrayOf    |
+  | ShortArray   | shortArrayOf   |
+  | ByteArray    | byteArrayOf    |
+  | FloatArray   | floatArrayOf   |
+  | BooleanArray | booleanArrayOf |
+  | Array        | arrayOf        |
+
+  ```kotlin
+  val intArrayOf = intArrayOf(10, 30, 20)
+  val intArray = listOf(10, 20, 30).toIntArray()
+  val files = arrayOf(File("x"), File("y"))
+  ```
+
+**Map的创建**
+
++ to是个省略了点号和参数的特殊函数，to函数将它左边和右边的值转化成一对pair
+
+  ```kotlin
+  val map = mapOf("Volerde" to 20, Pair("LunarDust",18), "Hanau" to 23)
+  ```
+
+**读取Map的值**
+
++ []取值运算符，读取键对应的值，如果键不存在，返回null
+
++ getValue，读取键对应的值，如果键不存在，抛出异常
+
++ getOrElse，读取键对应的值，或者使用匿名函数返回默认值
+
++ getOrDefault，读取键对应的值，或者返回默认值
+
+  ```kotlin
+  val map = mapOf("Volerde" to 20, Pair("LunarDust",18), "Hanau" to 23)
+  map["Volerde"]
+  map.getValue("Volerde")
+  map.getOrElse("LunarDust") {"Not Fund"}
+  map.getOrDefault("Hanau",-1)
+  ```
+
+**遍历**
+
++ forEach遍历Map
+
+  ```kotlin
+  map.forEach {
+      println("${it.key},${it.value}")
+  }
+  map.forEach { (key, value) ->
+      println("$key,$value")
+  }
+  ```
+
+**可变集合**
+
++ 通过mutableMapOf创建可变的Map
+
++ getOrPut键值不存在，就添加并返回结果，否则就返回已有键对应的值
+
+  ```kotlin
+  val map = mutableMapOf("Volerde" to 20, Pair("LunarDust", 18))
+  map += "Ceylon" to 20
+  //推荐转成 map["Ceylon"] = 21
+  map.put("Ceylon", 21)
+  map.getOrPut("Hanau") { 23 }
+  ```
+
+##### 定义类与Field关键字
+
+**定义类**
+
++ 针对你定义的每一个属性，Kotlin都会产生一个field、一个getter以及一个setter，field用来存储属性数据。不能直接定义field，Kotlin会封装field，保护里面的数据，只暴露给getter和setter使用。属性的getter方法决定你如何读取属性值，每个属性都有getter方法，setter方法决定如何给属性赋值，所有只有可变属性才会有setter方法。尽管Kotlin会自动提供默认的getter和setter方法，但是需要控制如何写入属性数据时，也可以自定义它们 
+
+  ```kotlin
+  class Player {
+      var name = "volerde"
+          get() = field.replaceFirstChar {
+              if (it.isLowerCase()) it.titlecase(Locale.getDefault())
+              else it.toString()
+          }
+          set(value) {
+              field = value.trim()
+          }
+  }
+  ```
+
+**计算属性**
+
++ 计算属性是通过一个覆盖get或set运算符来定义，此时不需要field
+
+  ```kotlin
+  val rolledValue
+      get() = (1..6).shuffled().first()
+  ```
+
+**防范静态条件**
+
++ 如果一个类属性既可空又可变，那么引用它之前必须保证它非空，可以使用also标准函数
+
+##### 初始化
+
+**主构造函数**
+
++ 在Kotlin中，定义主构造函数，使用临时变量为各个属性提供初始值时，为便于识别，临时变量（包括仅引用一次的参数），通常都会以下划线开头的名字命名
+
+  ```kotlin
+  class Player(_name: String, _age: Int) {
+      var name = _name
+      var age = _age
+      var isNormal = false
+  }
+  ```
+
+**在主构造函数里定义属性**
+
++ Kotlin允许不使用临时变量赋值，而是直接用一个定义同时指定参数和类属性，通常会使用这种方法，可以减少代码量
+
+  ```kotlin
+  class Player(_name: String, var age: Int) {
+      var name = _name
+      var isNormal = false
+  }
+  ```
+
+**次构造函数**
+
++ 有主就有次，可以定义多个次构造函数来配置不同的参数组合
+
+  ```kotlin
+  class Player(_name: String, var age: Int) {
+      //次构造函数
+      constructor(name: String) : this(name, age = 10)
+      var name = _name
+      var isNormal = false
+  }
+  ```
+
++ 使用次构造函数，定义初始化代码逻辑
+
+  ```kotlin
+  class Player(_name: String, var age: Int, var isNormal: Boolean) {
+      constructor(name: String) : this(name, 10, false) {
+          this.name = name.uppercase(Locale.getDefault())
+      }
+      constructor(name: String, age: Int) : this(name, age, true)
+      var name = _name
+  }
+  ```
+
+**默认参数**
+
++ 定义构造函数时，可以给构造函数参数指定默认值，如果用户调用时不提供值参，就可以使用这个默认值
+
+  ```kotlin
+  class Player(_name: String, var age: Int, var isNormal: Boolean = true) {
+      constructor(name: String) : this(name, 18)
+      var name = _name
+  }
+  ```
+
+**初始化块**
+
++ 初始化可以设置变量或值，以及执行有效性检查，如检查传给某构造函数的值是否有效，**初始化块的代码会在构造类实例时执行**
+
+  ```kotlin
+  class Player(_name: String, var age: Int, var isNormal: Boolean = true) {
+      var name = _name
+      init {
+          require(age > 0) {"age must be positive."}
+          require(name.isNotBlank()) {"player must have  a name."}
+      }
+  }
+  ```
+
+**初始化顺序**
+
+1. 主构造函数里声明的属性
+2. 类级别的属性赋值
+3. init初始化块里的属性赋值和函数调用
+4. 次构造函数里的属性赋值和函数调用
+
+**延迟初始化**
+
++ 使用lateinit关键字相当于做了约定：在使用它之前初始化
+
++ 只要无法确定lateinit变量是否完成初始化，就可以执行isInitialized检查
+
+  ```kotlin
+  class Player{
+      lateinit var equipment:String
+      fun ready() {
+          equipment = "Nothing"
+      }
+      fun battle() {
+          if (::equipment.isInitialized) println(equipment)
+      }
+  }
+  ```
+
+**惰性初始化**
+
++ 延迟初始化并不是推后初始化的唯一方式，可以暂时不初始化某个变量，直到首次使用它
+
+  ```kotlin
+  class Player(_name: String) {
+      val name = _name
+      val config by lazy { loadConfig() }
   
+      private fun loadConfig(): String {
+          return "xxx"
+      }
+  }
+  ```
+
+**初始化顺序相关**
+
+1. 在使用初始化块时，顺序非常重要，必须保证块中的所有属性已完成初始化
+
+   ```kotlin
+   class Player {
+       init {
+           //此时age未初始化，报错
+           age = 20
+       }
+       val age = 10
+   }
+   ```
+
+2. 此时编译没有问题，编译器看到name已在init里初始化，但代码一运行就报空指针异常，因为name属性还没赋值，firstLetter函数就应用它了
+
+   ```kotlin
+   class Player {
+       val name:String//初始化顺序2
+       private fun firstLetter() = name[0]//调用时执行
+       init {//初始化顺序3
+           println(firstLetter())//此时name未赋值，执行函数
+           name = "Volerde"
+       }
+   }
+   ```
+
+3. 代码编译没问题，编译器看到所有代码都初始化了，但运行结果为null。因为在用initPlayerName函数初始化playerName时，name属性还未初始化
+
+   ```kotlin
+   class Player(_name: String) {
+       val playerName: String = initPlayerName()
+       val name: String = _name
+       private fun initPlayerName() = name
+   }
+   ```
+
+##### 继承
+
++ 类默认都是封闭的，要让某个类开放继承，必须使用open关键字修饰
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
