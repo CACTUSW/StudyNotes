@@ -1102,25 +1102,674 @@ $\huge \underbrace {var}_{变量定义关键字}\underbrace{maximumAge}_{变量�
 
 + 类默认都是封闭的，要让某个类开放继承，必须使用open关键字修饰
 
+**函数重载**
 
++ 父类的函数也要以open关键字修饰，子类才能覆盖它
 
+  ```kotlin
+  open class Player(val name: String) {
+      fun description() = "Product: $name"
+      open fun load() = "Nothing..."
+  }
+  class LuxuryProduct : Player("Luxury") {
+      override fun load() = "LuxuryProduct Loading..."
+  }
+  ```
 
+**类型转换**
 
++ Kotlin的is关键字可以用来检查某个对象的类型
 
+  ```kotlin
+  val p = LuxuryProduct()
+  println(p is LuxuryProduct)
+  println(p is Player)
+  ```
 
++ as操作符声明，类型转换
 
+  ```kotlin
+  val p = LuxuryProduct()
+  p as Player
+  ```
 
+**智能类型转换**
 
++ Kotlin的编译器很聪明，只要能确定any is 父类条件检查属实，它就会将any当做子类类型对待。因此，编译器允许不经类型转换直接使用
 
+  ```kotlin
+  val p = Player("volerde")
+  p as LuxuryProduct
+  p.specialFunc()
+  ```
 
+**Kotlin层次**
 
++ 无法在代码里显示指定，每一个类都会继承一个共同的叫做Any的超类
 
+  <img src="Kotlin.assets/image-20220809165609848.png" alt="image-20220809165609848" style="zoom:80%;" />
 
+##### 对象
 
+**object关键字**
 
++ 使用object关键字，可以定义一个单例类
++ 使用object关键字三种方式
+  + 对象声明
+  + 对象表达式
+  + 伴生对象
 
+**对象声明**
 
++ 对象声明有利于组织代码和管理状态，尤其是管理整个应用运行生命周期内的某些一致性状态
 
+  ```kotlin
+  object Player {
+      init {
+          println("Loading Application")
+      }
+      fun doSomething() {
+          println("something")
+      }
+  }
+  fun main() {
+      //既是类名又是实例名
+      Player.doSomething()
+  }
+  ```
+
+**对象表达式**
+
++ 有时候不一定非要定义一个新的命名类，对于只需要使用一次的类实例，可以使用对象表达式，这个对象表达式是XX的子类。这个匿名类遵循object关键字的一个规则。
+
+  ```kotlin
+  open class Player {
+      open fun load() = println("Loading...")
+  }
+  fun main() {
+      val p = object : Player() {
+          override fun load() = println("anonymous loading...")
+      }
+  }
+  ```
+
+**伴生对象**
+
++ 若想将某个对象的初始化和一个类实例绑到一起，可以考虑使用伴生对象，使用companion修饰符，可以在一个类定义里声明一个伴生对象，一个类里面只能有一个伴生对象
+
+  ```kotlin
+  open class Player {
+      //只有初始化Player类或调用load函数时，伴生对象的内容才会载入，无论实例化Player类多少次，伴生对象只有一个实例存在
+      companion object {
+          private const val PATH = "x"
+          fun load() = File(PATH).readBytes()
+      }
+  }
+  ```
+
+**嵌套类**
+
++ 如果一个类只对另一个类有用，那么将其嵌入到该类中并使这两个类保持在一起合乎逻辑，那么就可以使用嵌套类
+
+  ```kotlin
+  class Player {
+      class Equipment(var name: String) {
+          fun show() = println("equipment $name")
+      }
+      fun battle() = Equipment("Test").show()
+  }
+  ```
+
+**数据类**
+
++ 用来存储数据的类
+
++ 数据类默认提供了toString的个性化实现
+
++ ==符号默认情况下，比较对象就是比较它们的引用值，数据类提供了equals和hashCode的个性化实现
+
+  ```kotlin
+  data class Player(var x: Int, var y: Int) {
+      //坐标值是否为正
+      var isInBounds = x >= 0 && y >= 0
+  }
+  fun main() {
+      println(Player(1,5))
+      println(Player(1,5) == Player(1,5))
+  }
+  ```
+
+**copy**
+
++ 除了重写Any类的部分函数，提供更好用的默认实现外，数据类型还提供了一个函数，可以用来复制一个对象。假设要创建一个Student实例，除了拥有name属性，其余属性和另一个现有的Student实例完全一样，如果Student是个数据类，那么复制现有的Student实例就很简单，只要调用copy函数，给想修改的属性传入值参就可以
+
+  ```kotlin
+  val student = Student("Volerde")
+  val copy = student.copy(name = "LunarDust")
+  ```
+
++ copy时会新创建个实例，但是创建过程中不会调用次构造函数，因此在次构造函数中更改的属性并不会通过copy复制给新的实例
+
+**解构声明**
+
++ 解构声明的后台实现就是声明component1、component2等若干组件函数，让每个函数负责管理要返回的一个属性数据。定义一个数据类时，会自动对所有定义在主构造函数的属性添加对应的组件函数
+
+  ```kotlin
+  class Student(val experience: Int, val level: Int) {
+      // 函数名不可更改，从1开始
+      operator fun component1() = experience
+      operator fun component2() = level
+  }
+  fun main() {
+      val (component1, component2) = Student(10, 20)//非数据类的解构声明
+  }
+  ```
+
+  ```kotlin
+  data class Student(val experience: Int, val level: Int)
+  fun main() {
+      val (component1, component2) = Student(10, 20)//数据类的解构声明
+  }
+  ```
+
+**运算符重载**
+
++ 若要将内置运算符应用在自定义类上，必须重写运算符函数，告诉编译器如何操作自定义类
+
+  ```kotlin
+  data class Student(val x: Int, val y: Int) {
+      operator fun plus(other: Student) = Student(x + other.x, y + other.y)
+  }
+  fun main() {
+      val student1 = Student(20, 40)
+      val student2 = Student(20, 40)
+      println(student1 + student2)//本来无法相加，重载plus后，实现相加
+  }
+  ```
+
++ 常见操作符
+
+  | 操作符 | 函数名     | 作用                                                     |
+  | ------ | ---------- | -------------------------------------------------------- |
+  | +      | plus       | 把一个对象添加到另一个对象里                             |
+  | +=     | plusAssign | 把一个对象添加到另一个对象里，然后将结果赋值给第一个对象 |
+  | ==     | equals     | 如果两个对象相等，则返回true，否则返回false              |
+  | >      | compareTo  | 如果左边的对象大于右边的对象，则返回true，否则返回false  |
+  | []     | get        | 返回集合中指定位置的元素                                 |
+  | ..     | rangeTo    | 创建一个range对象                                        |
+  | in     | contains   | 如果对象包含在集合里，则返回true                         |
+
+**枚举类**
+
++ 用来定义常量集合的一种特殊类
+
+  ```kotlin
+  enum class Student {
+      EAST, WEST, SOUTH, NORTH
+  }
+  fun main() {
+      println(Student.EAST)
+  }
+  ```
+
++ 枚举类也可以定义函数
+
+  ```kotlin
+  enum class Student(private val cellPhone: CellPhone) {// 给枚举类添加一个主构造函数
+      // 因为枚举类的构造函数带参数，所以定义每个枚举常量时，都要传入CellPhone对象，调用构造函数
+      EAST(CellPhone(5, -1)),
+      WEST(CellPhone(1, 0)),
+      SOUTH(CellPhone(0, 1)),
+      NORTH(CellPhone(-1, 0));
+      fun updateCellPhone(personalCellPhone: CellPhone) =
+          CellPhone(personalCellPhone.x + cellPhone.x, personalCellPhone.y + cellPhone.y)
+  }
+  fun main() {
+      println(Student.EAST.updateCellPhone(CellPhone(10, 20)))// 调用函数时，使用的为枚举常量
+  }
+  ```
+
+**代数数据类型**
+
++ 可以用来表示一组子类型的闭集，枚举类就是一种简单的ADT
+
+  ```kotlin
+  enum class Student {
+      ONE, TWO, THREE
+  }
+  class Driver(var status: Student) {
+      fun checkStudent(): String {
+          return when (status) {// 不用使用else语句，且编译器会自动检查代码处理有无遗漏
+              Student.ONE -> "1"
+              Student.TWO -> "2"
+              Student.THREE -> "3"
+          }
+      }
+  }
+  ```
+
+**密封类**
+
++ 对于复杂的ADT，可以使用Kotlin的密封类（sealed class）来实现更复杂的定义，密封类可以用来定义一个类似于枚举类的ADT，但是可以更灵活的控制某个子类型
+
++ 密封类可以有若干个子类，要继承密封，这些子类必须和它定义在同一个文件里
+
+  ```kotlin
+  sealed class LicenseStatus {
+      object UnQualified : LicenseStatus()
+      object Learning : LicenseStatus()
+      class Qualified(val licenceId: String) : LicenseStatus()
+  }
+  class Driver(var status: LicenseStatus) {
+      fun checkLicense(): String {
+          return when (status) {
+              is LicenseStatus.UnQualified -> "没资格"
+              is LicenseStatus.Learning -> "在学"
+              is LicenseStatus.Qualified -> "有资格，编号为：${(status as LicenseStatus.Qualified).licenceId}"
+          }
+      }
+  }
+  ```
+
+**使用数据类的条件**
+
++ 正是因为上述这些特性，才倾向于用数据类来表示存储数据的简单对象，对于那些经常需要比较、复制或打印自身内容的类，数据类适合。一个类要想成为数据类，需要符合以下三个条件：
+  + 数据类必须有至少带一个参数的主构造函数
+  + 数据类主构造函数的参数必须是val或var
+  + 数据类不能使用abstract、open、sealed和inner修饰符
+
+##### 接口
+
+**接口定义**
+
++ Kotlin规定所有的接口属性和函数实现都要使用override关键字，接口中定义的函数并不需要open关键字修饰，默认都是open
+
+  ```kotlin
+  interface Movable {
+      var maxSpeed: Int
+      var wheels: Int
+      fun move(movable: Movable): String
+  }
+  class Car(_name: String, override var wheels: Int = 4) : Movable {
+      override var maxSpeed: Int
+          get() = TODO("Not yet implemented")
+          set(value) {}
+      override fun move(movable: Movable): String {
+          TODO("Not yet implemented")
+      }
+  }
+  ```
+
+**抽象类**
+
++ 定义一个抽象类，需要在定义前加上abstract关键字，除了具体的函数实现，抽象类也可以包含抽象函数（只有定义，没有函数实现）
+
+  ```kotlin
+  abstract class Gun(val range: Int) {
+      abstract fun trigger(): String
+  }
+  //Kotlin中的多继承是通过接口来实现的，因为能给接口中的函数实现函数体，间接地相当于实现了多个父类的继承。
+  class IBM5100(_price: Int) : Gun(range = 100) {
+      override fun trigger(): String {
+          return "This is IMB-5100"
+      }
+  }
+  fun main() {
+      val gun = IBM5100(500)
+      println(gun.trigger())
+  }
+  ```
+
+##### 泛型
+
+**泛型类**
+
++ 泛型类的构造函数可以接收任何类型
+
++ MagicBox类指定的泛型参数由放在一对<>类的字母T表示，T是个代表item类型的占位符。MagicBox类可以接收任何类型的item作为主构造函数值（item：T），并将item值赋给同样是T类型的subject私有属性
+
+  ```kotlin
+  class MagicBox<T>(item: T) {
+      private var subject: T = item
+  }
+  class Boy(val name: String, val age: Int)
+  class Dog(val weight: Int)
+  fun main() {
+      val box1: MagicBox<Boy> = MagicBox(Boy("Volerde", 17))
+      val dog: MagicBox<Dog> = MagicBox(Dog(20))
+  }
+  ```
+
++ 泛型参数通常用字母T（type）表示，当然，也可以用其他字母或其他英文单词。但是默认都是T
+
+**泛型函数**
+
++ 泛型参数也可用于函数
+
++ 定义一个函数用于获取元素，当且仅当MagicBox可用时，才能获取元素
+
+  ```kotlin
+  class MagicBox<T>(item: T) {
+      private var subject: T = item
+      var available =false
+      fun fetch(): T? = subject.takeIf { available }
+  }
+  class Boy(val name: String, val age: Int)
+  fun main() {
+      val box1: MagicBox<Boy> = MagicBox(Boy("Volerde", 17))
+      box1.available = true
+      box1.fetch()?.run { println("you find $name") }
+  }
+  ```
+
+**多泛型参数**
+
++ 泛型函数或泛型类也可以有多个泛型参数
+
+  ```kotlin
+  class MagicBox<T>(item: T) {
+      private var subject: T = item
+      var available = false
+      fun fetch(): T? = subject.takeIf { available }
+      fun <R> fetch(subjectModFunction: (T) -> R): R? {// return -> R
+          return subjectModFunction(subject).takeIf { available }
+      }
+  }
+  class Boy(val name: String, val age: Int)
+  class Man(val name: String, val age: Int)
+  fun main() {
+      val box1: MagicBox<Boy> = MagicBox(Boy("Volerde", 17))
+      box1.available = true
+      val man = box1.fetch() { Man(it.name, it.age.plus(10)) }
+      man?.let { println("${it.name},${it.age}") }
+  }
+  ```
+
+**泛型类型约束**
+
++ 给泛型添加约束，在T后加上约束类型
+
+  ```kotlin
+  class MagicBox<T:Human>(item: T) {
+      private var subject: T = item
+      var available = false
+      fun fetch(): T? = subject.takeIf { available }
+  }
+  open class Human(val age: Int)
+  class Boy(val name: String, age: Int):Human(age)
+  fun main() {
+      val box1: MagicBox<Human> = MagicBox(Boy("Volerde", 17))
+      box1.available = true
+  }
+  ```
+
+**vararg关键字与get函数**
+
++ MagicBox能存放任何类型的Human实例，但只能放一个，若需放置多个呢？
+
+  ```kotlin
+  class MagicBox<T : Human>(vararg item: T) {//vararg可变参数
+      private var subject: Array<out T> = item
+      var available = false
+      fun fetch(index: Int): T? = subject[index].takeIf { available }
+      fun <R> fetch(index: Int, subjectModFunction: (T) -> R): R? {
+          return subjectModFunction(subject[index]).takeIf { available }
+      }
+  }
+  open class Human(val age: Int)
+  class Boy(val name: String, age: Int) : Human(age)
+  ```
+
+*协变、逆变与不变**
+
++ out（协变），如果泛型类只将泛型类型作为函数的返回（输出），那么使用out，可以称之为生产类、接口，因为它主要是用来生产（produce）指定的泛型对象
+
+  ```kotlin
+  interface Production<out T> {
+      fun product(): T
+  }
+  ```
+
++ in（逆变），如果泛型类只将泛型类型作为函数的入参（输入），那么使用in，可以称之为消费者类/接口，因为它主要是用来消费（consume）指定的泛型对象
+
+  ```kotlin
+  interface Consumer<in T> {
+      fun consume(item: T)
+  }
+  ```
+
++ invariant（不变），如果泛型类既将泛型类型作为函数参数，又将泛型类型作为函数的输出，那么既不用out，也不用in
+
+  ```kotlin
+  interface ProductionConsumer<T> {
+  	fun product(): T
+  	fun consume(item: T)
+  }
+  ```
+
++ 为什么使用in&out?
+
+  + 父类泛型对象可以赋值给子类泛型对象，用in
+
+  + 子类泛型对象可以赋值给父类泛型对象，用out
+
+    ![image-20220811222352493](Kotlin.assets/image-20220811222352493.png)
+  
+  + 举个例子，定义一个汉堡类对象，它是一种快餐，也是一种食物
+  
+    ![image-20220811220136534](Kotlin.assets/image-20220811220136534.png)
+  
+    ```kotlin
+    interface Production<out T> {
+        fun product(): T
+    }
+    interface Consumer<in T> {
+        fun consume(item: T)
+    }
+    open class Food
+    open class FastFood : Food()
+    class Burger : FastFood()
+    class FoodStore : Production<Food> {
+        override fun product(): Food {
+            println("Produce Food")
+            return Food()
+        }
+    }
+    class FastFoodStore : Production<FastFood> {
+        override fun product(): FastFood {
+            println("Produce FastFood")
+            return FastFood()
+        }
+    }
+    class BurgerStore : Production<Burger> {
+        override fun product(): Burger {
+            println("Produce Burger")
+            return Burger()
+        }
+    }
+    class Everybody : Consumer<Food> {
+        override fun consume(item: Food) {
+            println("eat food")
+        }
+    }
+    class ModernPeople : Consumer<FastFood> {
+        override fun consume(item: FastFood) {
+            println("eat fastFood")
+        }
+    }
+    class American : Consumer<Burger> {
+        override fun consume(item: Burger) {
+            println("eat burger")
+        }
+    }
+    fun main() {
+        //子类泛型对象可以赋值给父类泛型对象，用out
+        val production1: Production<Food> = FoodStore()
+        val production2: Production<Food> = FastFoodStore()
+        val production3: Production<Food> = BurgerStore()
+        //父类泛型对象可以赋值给子类泛型对象，用in
+        val consumer1:Consumer<Burger> = Everybody()
+        val consumer2:Consumer<Burger> = ModernPeople()
+        val consumer3:Consumer<Burger> = American()
+    }
+    ```
+
+**reified**
+
++ reified关键字可以检查泛型参数类型。Kotlin不允许对泛型参数T做类型检查，因为泛型参数类型会被类型擦除，即T的类型信息在运行时是不可知的，Java也有这样的规则
+
+  ```kotlin
+   class MagicBox<T : Human>() {
+      // 产生一个指定类型的对象，如果不是指定类型的对象，就通过backup函数生成一个指定类型的对象
+      inline fun <reified T> randomOrBackup(backup: () -> T): T {
+          val items = listOf(
+              Boy("Volerde", 20),
+              Man("Volerde", 35),
+          )
+          val random = items.shuffled().first()
+          return if (random is T) {
+              random
+          } else {
+              backup()
+          }
+      }
+  }
+  open class Human(val age: Int)
+  class Boy(val name: String, age: Int) : Human(age)
+  class Man(val name: String, age: Int) : Human(age)
+  fun main() {
+      val box1: MagicBox<Human > = MagicBox()
+      val subject = box1.randomOrBackup {
+          Man("LunarDust", 17)
+      }
+      println(subject.name)
+  }
+  ```
+
+##### 扩展函数
+
+**定义扩展函数**
+
++ 扩展可以在不直接修改类定义的情况下增加类功能，扩展可以用于自定义类，也可以用于List、String，以及Kotlin标准库里的其他类。和继承相似，扩展也能共享类行为。在无法接触到某个类定义，或者某个类没有使用open修饰符，导致无法继承时，扩展就是增加类功能的最好选择
+
+  ```kotlin
+  fun String.addExt(amount: Int = 1) = this + "!".repeat(amount)
+  fun Any.easyPrintln() = println(this)
+  fun main() {
+      println("abc".addExt(3))
+      13.easyPrintln()
+  }
+  ```
+
+**泛型扩展函数**
+
++ 泛型扩展函数不仅可以支持任何类型的接收者，还保留了接收者的类型信息，使用泛型类型后，扩展函数能够支持更多类型的接收者，适用范围更广了 
+
+  ```kotlin
+  fun String.addExt(amount: Int = 1): String {
+      print(this + "!".repeat(amount))
+      return this
+  }
+  fun <T> T.easyPrint(): T {
+      print(this)
+      return this
+  }
+  fun main() {
+      "abc".easyPrint().addExt(2).easyPrint()
+  }
+  ```
+
++ 泛型扩展函数在Kotlin标准库里随处可见，例如let函数，let函数被定义成了泛型扩展函数，能支持任何类型，它就收一个lambda表达式，这个lambda表达式接收T作为值参，返回的R-lambda表达式返回的任何新类型
+
+  ```kotlin
+  public inline fun <T, R> T.let(block: (T) -> R): R {
+      return block(this)
+  }
+  ```
+
+**扩展属性**
+
++ 除了给类添加功能扩展函数外，还可以给类定义扩展属性，例如给String类添加一个扩展，这个扩展可以统计字符串里有多少个元音字母
+
+  ```kotlin
+  val String.numuVowels
+      get() = count { "aeiou".contains(it) }
+  fun <T> T.easyPrintln(): T {
+      print(this)
+      return this
+  }
+  fun main() {
+      "The people's Republic of China".numuVowels.easyPrintln()
+  }
+  ```
+
+**可空类扩展**
+
++ 定义扩展函数用于可空类，在可空类型上定义扩展函数，就可以直接在扩展函数体内解决可能出现的空值问题
+
+  ```kotlin
+  infix fun String?.printWithDefault(default: String) = println(this ?: default)
+  fun main() {
+      val nullableString: String? = null
+      nullableString.printWithDefault("ABC")
+  }
+  ```
+
+**infix关键字**
+
++ 适用于有单个参数的扩展和类函数，可以用更简洁的语法调用函数。如果一个函数定义使用了infix关键字，那么调用它时，接收者和函数之间的点操作以及参数的一对括号都可以不要
+
+  ```kotlin
+  infix fun String?.printWithDefault(default: String) = println(this ?: default)
+  fun main() {
+      val nullableString: String? = null
+      nullableString printWithDefault "ABC"
+  }
+  
+  ```
+
++ 例如
+
+  ```kotlin 
+  "LunarDust".to(17)
+  mapOf("Volerde" to 17)//Kotlin中的格式
+  ```
+
+**定义扩展文件**
+
++ 扩展函数需要在多个文件里面使用，可以将它定义在单独的文件，然后import
+
+  ```kotlin
+  package space.volerde.learnKotlin
+  
+  fun <T> Iterable<T>.randomTake(): T = this.shuffled().first()
+  ```
+
+  ```kotlin
+  import space.volerde.learnKotlin.randomTake
+  
+  fun main() {
+      val list = listOf("Volerde", "LunarDust", "Hanau")
+      list.randomTake()
+  }
+  ```
+
+**重命名扩展**
+
++ 当你使用一个扩展或者一个类，而它名字不合意时
+
+  ```kotlin
+  import space.volerde.learnKotlin.randomTake as randomizer
+  
+  fun main() {
+      val list = listOf("Volerde", "LunarDust", "Hanau")
+      list.randomizer()
+  }
+  ```
+
+**Kotlin标准库中的扩展**
+
++ Kotlin标准库提供的很多功能都是通过扩展函数和扩展属性来实现的吗，包含类扩展的标准库文件通常都是以类名加s后缀来命名的，例如Sequences.kt,Ranges.kt,Maps.kt
 
 
 
