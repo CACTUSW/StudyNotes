@@ -1520,7 +1520,7 @@ $\huge \underbrace {var}_{变量定义关键字}\underbrace{maximumAge}_{变量�
   class Boy(val name: String, age: Int) : Human(age)
   ```
 
-*协变、逆变与不变**
+**协变、逆变与不变**
 
 + out（协变），如果泛型类只将泛型类型作为函数的返回（输出），那么使用out，可以称之为生产类、接口，因为它主要是用来生产（produce）指定的泛型对象
 
@@ -1771,31 +1771,253 @@ $\huge \underbrace {var}_{变量定义关键字}\underbrace{maximumAge}_{变量�
 
 + Kotlin标准库提供的很多功能都是通过扩展函数和扩展属性来实现的吗，包含类扩展的标准库文件通常都是以类名加s后缀来命名的，例如Sequences.kt,Ranges.kt,Maps.kt
 
+##### DSL
 
+**带接收者的函数字面量**
 
++ apply函数如何支持接收者对象的隐式调用
 
+  ```kotlin
+  public inline fun <T> T.apply(block: T.() -> Unit): T {
+      block()
+      return this
+  }
+  ```
 
+  ```kotlin
+  为什么要传入扩展函数（泛型），而不是一个普通的匿名函数？
+  T.() -> Unit
+  为什么是泛型的扩展函数？
+  扩展函数里自带了接收者对象的this隐式调用
+  匿名函数，也可以是扩展函数
+  () -> Unit 普通的匿名函数
+  File.() -> Unit 匿名函数内部this指向File对象，隐式调用
+  ```
 
+**DSL**
 
++ 使用这样的编程规范，就可以写出业界知名的“**领域特定语言**”（DSL），一种API编程范式，暴露接收者的函数和特性，以便于使用你定义的lambda表达式来读取和配置它们
 
+##### 函数式编程
 
++ 通常接触的为面向对象编程范式，另一个比较指名的编程范式是范圣宇20世纪50年，基于抽象数学的λ演算发展而来的函数式编程，尽管函数式编程语言更常用在学术而非商业软件领域，但它的一些原则适用于任何编程语言。函数式编程范式主要依赖于高阶函数（以函数为参数或返回函数）返回的数据，这些高阶函数专用于处理各种集合，可方便地联合多个同类函数构建链式操作以及创建复杂的计算行为。Kotlin支持多种编程范式，所以可以混用面向对象编程和函数式编程范式来解决问题
 
+**函数类别**
 
++ 一个函数式应用通常由三大类函数构成：变换transform、过滤filter、合并combine。每类函数都针对集合数据类型设计，目标是产生一个最终结果。函数式编程用到的函数生来都是可组合的，也就是说，你可以组合多个简单函数来构建复杂的计算行为 
 
+**变换**
 
++ 变换是函数式编程的第一大类函数，变换函数会遍历集合内容，用一个以值参形式传入的变换器函数，变换每一个元素，然后返回包含已修改元素的集合给链上的其他函数
++ 最常用的两个变换函数是map和flatMap 
 
+**map**
 
++ map变换函数会遍历接收者集合，让变换器函数作用与集合里的每个元素，返回结果是包含已修改元素的集合，会作为链上下一个函数的输入
 
+  ```kotlin
+  val animals = listOf("zebra", "giraffe", "elephant", "rat")
+  val babies = animals
+      .map { animal -> "A baby $animal" }
+      .map { baby -> "$baby,with the cutest little tail ever!" }
+  ```
 
++ 原始函数并没有被修改，map变换函数和定义的变换器函数做完事情后，返回的是一个新的集合，这样变量就不用变来变去了
 
++ 事实上，函数式编程范式支持的设计理念就是不可变数据的副本在链上的函数间传递
 
++ map返回的集合中的元素个数和输入集合必须一样，不过，返回的心机和里的元素可以是不同类型的
 
+  ```kotlin
+  val animals = listOf("zebra", "giraffe", "elephant", "rat")
+  val animalsLength = animals
+      .map { it.length }
+  ```
 
+**flatMap**
 
++ flatMap函数操作一个集合的集合，将其中多个集合中的元素合并后返回一个包含所有元素的单一集合
 
+  ```kotlin
+  val flatMap = listOf(
+      listOf(1, 2, 3,),
+      listOf(4, 5, 6)
+  ).flatMap { it }
+  ```
 
+**过滤**
 
++ 过滤是函数式编程的第二大类函数，过滤函数接收一个predicate函数，用他按给定条件检查接收者集合里的原色并给出true或false的判定。如果predicate函数返回true，受检元素就会添加到过滤函数返回的新集合里，如果predicate函数返回false，那么受检元素就被移除新集合
 
+  ```kotlin
+  val result = listOf("Volerde", "LunarDust", "Hanau")
+      .filter { it.contains("o") }
+  ```
 
+**filter**
 
++ filter过滤函数接收一个predicate函数，在flatMap遍历它的输入集合中的所有元素时，filter函数会让predicate函数按过滤条件，将符合条件的元素都放入它返回的新集合里。最后，flatMap会把变换器函数返回的子集合合并在一个新集合里
 
+  ```kotlin
+  val redItems = listOf(
+      listOf("red apple", "green apple", "blue apple"),
+      listOf("red fish", "blue fish"),
+      listOf("yellow banana", "teal banana")
+  )
+      .flatMap { it.filter { item -> item.contains("red") } }
+  ```
+
+**例子：找素数**
+
++ 使用filter及map
+
+  ```kotlin
+  val primeNumber = listOf(7, 4, 8, 4, 3, 9, 36, 2, 67, 11)
+      .filter { number ->
+          (2 until number)
+              .map { number % it }
+              .none { it == 0 }
+      }
+  ```
+
+**zip**
+
++ zip合并函数用来合并两个集合，返回一个包含键值对的新集合
+
+  ```kotlin
+  val list1 = listOf("Volerde", "LunarDust", "Hanau")
+  val list2 = listOf("large", "medium", "small")
+  val map = list1.zip(list2).easyPrintln().toMap()
+  ```
+
+**fold**
+
++ fold也可以用来合并值，接收一个初始累加器值，然后会根据匿名函数的结果更新
+
+  ```kotlin
+  val foldedValue = listOf(1, 2, 3, 4).fold(0) { accumulator, number ->
+      println("Accumulated value: $accumulator")
+      accumulator + (number * 3)
+  }
+  ```
+
+**为什么要使用函数式编程**
+
++ 若使用面向对象编程范式来实现
+
+  ```java
+  List<String> list1 = Arrays.asList("Volerde", "LunarDust", "Hanau");
+  List<String> list2 = Arrays.asList("large", "medium", "small");
+  Map<String, String> map = new HashMap<>();
+  for (int i = 0; i < list1.size(); i++) {
+      map.put(list1.get(i), list2.get(i));
+  }
+  ```
+
++ 函数式版本有着以下优势
+
+  + 累加变量（map）都是隐式定义的
+  + 函数运算结果会自动赋值给累加变量，降低了代码出错的机会
+  + 执行新任务的函数很容易添加到函数调用链上，因为它们都兼容Iterable类型
+
+**序列**
+
++ List、Set、Map集合类型，这几个集合类型统称为及早集合（eager collection）这些集合的任何一个实例在创建后，它要包含的元素都会被加入并允许访问。对应及早集合，Kotlin还有另一类集合：惰性集合（lazy collection）类似于类的惰性初始化，惰性集合类型的性能表现优异，尤其是用于包含大量元素的集合时，因为集合元素是按需产生的
++ Kotlin有个内置惰性集合类型叫序列（Sequence），序列不会索引排序它的内容，也不记录元素数目，事实上，在使用一个序列时，序列里的值可能有无限多，因为某个数据源能产生无限多个元素
+
+**generateSequence**
+
++ 针对某个序列，可能会定义一个只要序列有新值产生就被调用一下的函数，这样的函数叫迭代器函数，要定义一个序列和它的迭代器，可以用Kotlin的序列构造函数generateSequence，generateSequence函数接受一个初始种子值作为序列的起步值，在用generateSequence定义的序列上调用一个函数时，generateSequence函数会调用你指定的迭代器函数，决定下一个要产生的值
+
++ 例子：产生头100个素数
+
+  ```kotlin
+  fun Int.isPrime():Boolean {
+      (2 until this).map {
+          if (this % it == 0){
+              return false
+          }
+      }
+      return true
+  }
+  val list = (1..5000).toList().filter { it.isPrime() }.take(100)
+  ```
+
+  ```kotlin
+  //产生1000个素数，使用generateSequence
+  val takeOneThousandPrime = generateSequence(2) { value ->
+      value + 1
+  }.filter { it.isPrime() }.take(1000).toList()
+  ```
+
+##### Java和Kotlin
+
+ **互操作性与可空性**
+
++ java里所有对象都可能是null，当一个Kotlin函数返回String类型值，不能想当然的认为它的返回值就能符合Kotlin关于空值的规定
+
+**类型映射**
+
++ 代码运行时，所有的映射类型都会重新映射回对应的Java类型
+
+**属性访问**
+
++ 不需要调用相关setter方法，可以使用赋值语法来设置一个Java字段值
+
+**@JvmName**
+
++ 可以使用@JvmName注解指定编译类的名字
+
+  ```kotlin
+  @file:JvmName("nickname")
+  ```
+
+**@JvmField**
+
++ 在Java里，不能直接访问spells字段，必须使用getSpells，然而，可以给Kotlin属性添加@JvmField注解，暴露它的支持字段给Java调用者，从而避免使用getter方法
+
+  ```kotlin
+  @JvmField
+  val spells = listOf("Magic Ms.L","Lay on Hans")
+  ```
+
+**@JvmOverloads**
+
++ 协助产生Kotlin函数的重载版本。设计一个可能会暴露给Java用户使用的API时，记得使用@JvmOverloads注解，这样，无论是Kotlin开发者还是Java开发者，都会对这个API的可靠性感到满意
+
+  ```kotlin
+  @JvmOverloads
+  fun hand(left: String = "left", right: String = "right") {
+      println("")
+  }
+  ```
+
+**@JvmStatic**
+
++ @JVMField注解还能用来以静态方式提供伴生对象里定义的值
+
++ @JVMStatic注解的作用类似于@JvmField，允许直接调用伴生对象里的函数
+
+  ```kotlin
+  companion object {
+      @JvmField
+      val MAX_SPELL_COUNT = 10
+      @JvmStatic
+      fun getSpellBookGreeting() = println("I")
+  }
+  ```
+
+**@Throws**
+
++ 抛出一个需要检查的指定异常，Java和Kotlin有关异常检查的差异让@Throws注解给解决掉了，在编写供Java开发者调用的Kotlin API时，要考虑使用@Throws注解，这样，用户就知道怎么正确处理任何异常了
+
+  ```kotlin
+  @Throws(IOException::class)
+  fun acceptApology() {
+      throw IOException()
+  }
+  ```
+
+**函数类型操作**
+
++ 函数类型和匿名函数能提供高效的语法用于组件间的交互，是Kotlin编程语言里比较新颖的特性。简洁的语法因->操作符而实现，但Java8之前的JDK版本并不支持lambda表达式。在Java里，Kotlin函数类型使用的functionN这样的名字的接口来表示的，FunctionN中的N代表值参数目。这样的Function接口有23个，从Function0到Function22，每一个FunctionN都包含一个invoke函数，专用于函数类型函数。所以，任何时候需要调一个函数类型，都用它调用invoke
